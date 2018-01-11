@@ -1,26 +1,32 @@
-package com.morganwalkup.router2018.support;
+package com.morganwalkup.support;
 
 import java.util.Observable;
 import android.app.Activity;
-import com.morganwalkup.router2018.UI.UIManager;
-import com.morganwalkup.router2018.networks.Constants;
+import com.morganwalkup.UI.UIManager;
+import com.morganwalkup.networks.Constants;
 
 /**
- * Created by morganwalkup on 1/9/18.
+ * Responsible for booting the router
+ * Creates classes and declares them as observers
+ *
+ * @author Morgan Walkup
+ * @version 1.0
+ * @since 1/11/18
  */
-
-/*
-Responsible for booting the router
-Creates classes and declares them as observers
-*/
 public class Bootloader extends Observable {
 
-    //Constructor for Bootloader
+    /**
+     * Constructor for the BootLoader class
+     * @param parentActivity - The main activity of the router application
+     */
     public Bootloader(Activity parentActivity) {
         bootRouter(parentActivity);
     }
 
-    //Boots the router by instantiating high-level router classes
+    /**
+     * Boots the router by instantiating high-level router classes
+     * @param parentActivity - The main activity of the router application
+     */
     private void bootRouter(Activity parentActivity) {
         // Initialize ParentActivity
         ParentActivity.setParentActivity(parentActivity);
@@ -34,8 +40,11 @@ public class Bootloader extends Observable {
         test();
     }
 
-    //Runs basic tests to verify operation of the router
+    /**
+     * Runs basic tests to verify operation of the router
+     */
     private void test() {
         UIManager.getInstance().displayMessage(Constants.ROUTER_NAME + " is up and Running!");
+        UIManager.getInstance().displayMessage("IP Address is " + Constants.IP_ADDRESS);
     }
 }

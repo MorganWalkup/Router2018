@@ -1,14 +1,19 @@
-package com.morganwalkup.router2018.support;
+package com.morganwalkup.support;
 
 /**
- * Created by morganwalkup on 1/9/18.
+ * Container for handy methods used across multiple classes
+ *
+ * @author Morgan Walkup
+ * @version 1.0
+ * @since 1/11/18
  */
-
-// Container for handy methods used across multiple classes
 public class Utilities {
 
-    /* padHexString - this function prepends an inputString of hex characters
-     * with the proper number of zeros to conform to the provided byteCount
+    /**
+     * Prepends an inputString of hex characters with the proper
+     * number of zeros to conform to the provided byteCount
+     * @param inputString - The unpadded hex string
+     * @param byteCount - The desired byteCount represented by the padded hex string
      * @return - a hex string representing the requested number of bytes
      */
     static public String padHexString(String inputString, int byteCount) {
