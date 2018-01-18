@@ -7,12 +7,238 @@
     tools:context="com.morganwalkup.router2018.MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/title-bar"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="5dp"
+        android:gravity="center_vertical|center"
+        android:text="@string/title_bar"
+        android:textSize="20sp"
+        android:typeface="monospace"
+        android:paddingBottom="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <RelativeLayout
+        android:id="@+id/sniffer"
+        android:layout_width="550dp"
+        android:layout_height="400dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title-bar">
+
+        <TextView
+            android:id="@+id/sniffer-title"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/sniffer_title" />
+
+        <ListView
+            android:id="@+id/packets-list"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:layout_width="match_parent"
+            android:layout_height="163dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/sniffer-title" />
+
+        <TextView
+            android:id="@+id/protocols"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="10dp"
+            android:paddingLeft="15dp"
+            android:paddingStart="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/packets-list"
+            android:ellipsize="none"
+            android:scrollHorizontally="false"
+            android:fontFamily="monospace"
+            android:textSize="10sp"
+            android:text="@string/protocols_title" />
+
+        <TextView
+            android:id="@+id/hex-packets"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="10dp"
+            android:paddingLeft="15dp"
+            android:paddingStart="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/protocols"
+            android:ellipsize="none"
+            android:scrollHorizontally="false"
+            android:fontFamily="monospace"
+            android:textSize="10sp"
+            android:text="@string/hex_title" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/table"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title-bar">
+
+        <TextView
+            android:id="@+id/table-title"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/tables_tile" />
+
+        <RelativeLayout
+            android:id="@+id/adjacency-layout"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/table-title">
+
+            <TextView
+                android:id="@+id/adjacency-title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/adjacency_title" />
+
+            <ListView
+                android:id="@+id/adjacency-list"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/adjacency-title" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/arp-layout"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/adjacency-layout">
+
+            <TextView
+                android:id="@+id/arp-title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/arp_title" />
+
+            <ListView
+                android:id="@+id/arp-list"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/arp-title" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/forwarding-layout"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/arp-layout">
+
+            <TextView
+                android:id="@+id/forwarding-title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/forwarding_table" />
+
+            <ListView
+                android:id="@+id/forwarding-list"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/forwarding-title" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/routing-layout"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/forwarding-layout">
+
+            <TextView
+                android:id="@+id/routing-title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="0dp"
+                android:gravity="center"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/routing_table" />
+
+            <ListView
+                android:id="@+id/routing-list"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/routing-title" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

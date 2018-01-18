@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Router2018</string>
+    <string name="title_bar">Morgan Walkup\'s Router</string>
+    <string name="sniffer_title">Summary Frame List</string>
+    <string name="tables_tile">Internal Tables</string>
+    <string name="protocols_title">Protocols</string>
+    <string name="hex_title">Hex Packets</string>
+    <string name="adjacency_title">Adjacency Table</string>
+    <string name="arp_title">ARP Table</string>
+    <string name="routing_table">Routing Table</string>
+    <string name="forwarding_table">Forwarding Table</string>
+    <string name="IPMenuItem">Show IP Address</string>
 </resources>
