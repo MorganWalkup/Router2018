@@ -1,5 +1,7 @@
 package com.morganwalkup.support;
 
+import com.morganwalkup.networks.Constants;
+
 /**
  * Container for handy methods used across multiple classes
  *
@@ -28,6 +30,38 @@ public class Utilities {
         }
 
         return outputString;
+    }
+
+    /**
+     * Converts a hex string to the ASCII equivalent
+     * @param hexString - The hex string to be converted
+     * @return The ASCII equivalent of a series of hex characters
+     */
+    static public String convertHexToASCII(String hexString) {
+        StringBuilder asciiString = new StringBuilder();
+        for (int i = 0; i < hexString.length(); i+=2) {
+            String byteString = hexString.substring(i, i+2);
+            asciiString.append((char)Integer.parseInt(byteString, Constants.HEX_BASE));
+        }
+
+        return asciiString.toString();
+    }
+
+    /**
+     * Converts an ASCII string to a string of the Hex equivalents
+     * @param asciiString - The string of ASCII characters to be converted
+     * @return The Hex equivalent of a series of ASCII characters
+     */
+    static public String convertASCIIToHEX(String asciiString) {
+        char[] chars = asciiString.toCharArray();
+
+        // Add hex string equivalents to a new string buffer
+        StringBuffer hex = new StringBuffer();
+        for(int i = 0; i < chars.length; i++){
+            hex.append(Integer.toHexString((int)chars[i]));
+        }
+
+        return hex.toString();
     }
 
 }
