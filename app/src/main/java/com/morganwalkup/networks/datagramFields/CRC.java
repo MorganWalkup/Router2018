@@ -1,7 +1,5 @@
 package com.morganwalkup.networks.datagramFields;
 
-import com.morganwalkup.networks.Constants;
-import com.morganwalkup.networks.headerFields.HeaderField;
 import com.morganwalkup.support.Utilities;
 
 /**

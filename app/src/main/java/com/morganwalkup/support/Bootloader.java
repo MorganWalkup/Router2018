@@ -55,11 +55,11 @@ public class Bootloader extends Observable {
         UIManager.getInstance().displayMessage("IP Address is " + Constants.IP_ADDRESS);
 
         // Create LL2P Frame and display protocol explanation string for testing
-        LL2PAddressField destinationAddress = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_DESTINATION_ADDRESS, "C0FFEE");
-        LL2PAddressField sourceAddress = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_SOURCE_ADDRESS, "F00BAA");
+        LL2PAddressField destinationAddress = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_DESTINATION_ADDRESS, Constants.TEST_DESTINATION_ADDRESS);
+        LL2PAddressField sourceAddress = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_SOURCE_ADDRESS, Constants.MY_SOURCE_ADDRESS);
         LL2PTypeField typeField = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_TYPE, Constants.LL2P_TYPE_IS_TEXT);
-        DatagramPayloadField payload = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_PAYLOAD, "Hello, world!");
-        CRC crc = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_CRC, "7777");
+        DatagramPayloadField payload = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_PAYLOAD, Constants.TEST_PAYLOAD);
+        CRC crc = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_CRC, Constants.TEST_CRC_CODE);
         LL2PFrame ll2pFrame = new LL2PFrame(destinationAddress, sourceAddress, typeField, payload, crc);
         UIManager.getInstance().displayMessage(ll2pFrame.toProtocolExplanationString());
 
@@ -70,7 +70,7 @@ public class Bootloader extends Observable {
         } catch(Exception e) {
             return;
         }
-        Integer ll2paddress = Integer.parseInt("C0FFEE", Constants.HEX_BASE);
+        Integer ll2paddress = Integer.parseInt(Constants.TEST_DESTINATION_ADDRESS, Constants.HEX_BASE);
         TableRecord tableRecord = TableRecordFactory.getInstance().getItem(Constants.ADJACENCY_RECORD, ipAddress, ll2paddress);
         UIManager.getInstance().displayMessage(tableRecord.toString());
     }

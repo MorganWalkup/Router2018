@@ -1,4 +1,4 @@
-package com.morganwalkup.networks.headerFields;
+package com.morganwalkup.networks.datagramFields;
 
 /**
  * Interface for all header fields in LL2P packets and frames

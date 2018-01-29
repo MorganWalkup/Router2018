@@ -23,6 +23,13 @@ public class Constants {
     public static final String ROUTER_NAME = "WalkieTalkup";
     // Tag used to search log files from the debugger
     public static final String LOG_TAG = "WALKIETALKUP: ";
+    // Hex code identifying this router
+    public static final String MY_SOURCE_ADDRESS = "FA1AF1";
+
+    // Constants for test LL2P frame and table records
+    public static final String TEST_DESTINATION_ADDRESS = "C0FFEE";
+    public static final String TEST_PAYLOAD = "Hello, world!";
+    public static final String TEST_CRC_CODE = "7777";
 
     // Unique integer constant for Text Datagrams
     public static final int TEXT_DATAGRAM = 8;

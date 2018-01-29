@@ -5,7 +5,7 @@ import com.morganwalkup.networks.datagramFields.CRC;
 import com.morganwalkup.networks.datagramFields.DatagramPayloadField;
 import com.morganwalkup.networks.datagramFields.LL2PAddressField;
 import com.morganwalkup.networks.datagramFields.LL2PTypeField;
-import com.morganwalkup.networks.headerFields.HeaderField;
+import com.morganwalkup.networks.datagramFields.HeaderField;
 
 /**
  * Factory generating HeaderFields

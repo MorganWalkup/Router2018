@@ -169,7 +169,8 @@ public class LL2PFrame implements Datagram {
         explanationString += (this.getSourceAddress().explainSelf() + "\n");
         explanationString += (this.getType().explainSelf() + "\n");
         explanationString += (this.getPayload().explainSelf() + "\n");
-        explanationString += (this.getCRC().explainSelf() + "\n");
+        explanationString += (this.getCRC().explainSelf());
+
         return explanationString;
     }
 
