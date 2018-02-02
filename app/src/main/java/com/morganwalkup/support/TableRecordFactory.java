@@ -11,7 +11,7 @@ import java.net.InetAddress;
  * Created by morganwalkup on 1/25/18.
  */
 
-public class TableRecordFactory implements Factory<TableRecord,Object[]> {
+public class TableRecordFactory implements Factory<TableRecord,String> {
 
     /** The one and only instance of the TableRecordFactory */
     private static final TableRecordFactory ourInstance = new TableRecordFactory();
@@ -33,10 +33,10 @@ public class TableRecordFactory implements Factory<TableRecord,Object[]> {
      * @param <U> - The type of the created object (must extend TableRecord)
      * @return The newly created object
      */
-    public <U extends TableRecord> U getItem(int type, Object... inputData) {
+    public <U extends TableRecord> U getItem(int type, String inputData) {
         switch(type) {
             case Constants.ADJACENCY_RECORD:
-                return (U) new AdjacencyRecord((InetAddress)inputData[0], (Integer)inputData[1]);
+                return (U) new AdjacencyRecord(inputData);
             default:
                 return null;
         }

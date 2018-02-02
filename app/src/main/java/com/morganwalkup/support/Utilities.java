@@ -2,6 +2,8 @@ package com.morganwalkup.support;
 
 import com.morganwalkup.networks.Constants;
 
+import java.util.Calendar;
+
 /**
  * Container for handy methods used across multiple classes
  *
@@ -10,6 +12,9 @@ import com.morganwalkup.networks.Constants;
  * @since 1/11/18
  */
 public class Utilities {
+
+    /** The time the program began (in seconds since 1970) */
+    public static long baseDateInSeconds = Calendar.getInstance().getTimeInMillis()/1000;
 
     /**
      * Prepends an inputString of hex characters with the proper
@@ -62,6 +67,14 @@ public class Utilities {
         }
 
         return hex.toString();
+    }
+
+    /**
+     * Get the time (in seconds) since the program began
+     * @return The time (in seconds) since the program began
+     */
+    static public int getTimeInSeconds() {
+        return (int) (Calendar.getInstance().getTimeInMillis()/1000 - baseDateInSeconds);
     }
 
 }

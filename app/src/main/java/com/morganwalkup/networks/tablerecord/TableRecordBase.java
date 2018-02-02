@@ -10,9 +10,18 @@ public class TableRecordBase implements TableRecord {
     /** Value in seconds of the last time the record was referenced (touched) or installed in the table */
     private int lastTimeTouched;
 
+    /**
+     * Default constructor
+     */
     public TableRecordBase() {
         this.updateTime();
     }
+
+    /**
+     * Constructor accepting a data string
+     * @param dataString Parseable data string containing record data
+     */
+    public TableRecordBase(String dataString) { this.updateTime(); }
 
     /**
      * Get difference between current system time and last time touched

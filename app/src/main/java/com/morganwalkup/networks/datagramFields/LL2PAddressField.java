@@ -13,6 +13,7 @@ public class LL2PAddressField implements HeaderField {
 
     /** Integer value of the address */
     private Integer address;
+    public Integer getAddress() { return this.address; }
     /** True if the contained address is a source address */
     private Boolean isSourceAddress;
     /** Contains the explanation of the contents of this field */
@@ -87,7 +88,7 @@ public class LL2PAddressField implements HeaderField {
      */
     private void setExplanation() {
         String explanationString = (this.isSourceAddress) ? "Source LL2P Address: " : "Destination LL2P Address: ";
-        explanationString += this.address.toString();
+        explanationString += this.toHexString();
         this.explanation = explanationString;
     }
 

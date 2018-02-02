@@ -42,20 +42,4 @@ public class DatagramFactory implements Factory<Datagram, String> {
         }
     }
 
-    /**
-     * Generates an instance of the class type specified, using the given data
-     * @param type - The type of the object to create
-     * @param inputData - The data used to create the object
-     * @param <U> - The type of the created object (must extend Datagram)
-     * @return The newly created object
-     */
-    public <U extends Datagram> U getItem(String type, String inputData) {
-        switch(type) {
-            case Constants.LL2P_TYPE_IS_TEXT:
-                return (U) new LL2PFrame(inputData);
-            default:
-                return null;
-        }
-    }
-
 }

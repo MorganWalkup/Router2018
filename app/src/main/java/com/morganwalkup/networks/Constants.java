@@ -25,6 +25,8 @@ public class Constants {
     public static final String LOG_TAG = "WALKIETALKUP: ";
     // Hex code identifying this router
     public static final String MY_SOURCE_ADDRESS = "FA1AF1";
+    // Hex code identifying the UDP port used for transmission
+    public static final int UDP_PORT = 49999;
 
     // Constants for test LL2P frame and table records
     public static final String TEST_DESTINATION_ADDRESS = "C0FFEE";

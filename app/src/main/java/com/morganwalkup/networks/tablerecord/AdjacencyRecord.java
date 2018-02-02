@@ -1,5 +1,10 @@
 package com.morganwalkup.networks.tablerecord;
 
+import android.util.Log;
+
+import com.morganwalkup.networks.Constants;
+import com.morganwalkup.support.GetIPAddress;
+
 import java.net.InetAddress;
 
 /**
@@ -23,6 +28,22 @@ public class AdjacencyRecord extends TableRecordBase {
         super();
         this.ipAddress = ipAddress;
         this.ll2pAddress = ll2pAddress;
+    }
+
+    /**
+     * Constructor accepting a string holding record data
+     * @param ipAndLL2PAddress - Parseable string of record data in the form "<ipAddress><ll2pAddress>"
+     */
+    public AdjacencyRecord(String ipAndLL2PAddress) {
+        super();
+        String ll2pAddressString = ipAndLL2PAddress.substring(ipAndLL2PAddress.length() - Constants.LL2P_ADDR_FIELD_LENGTH * 2);
+        try {
+            this.setLL2PAddress(Integer.parseInt(ll2pAddressString, Constants.HEX_BASE));
+        } catch (Exception e){
+            Log.i(Constants.LOG_TAG, e.getMessage());
+        }
+        String ipAddressString = ipAndLL2PAddress.substring(0,ipAndLL2PAddress.length() - Constants.LL2P_ADDR_FIELD_LENGTH * 2);
+        this.setIpAddress(GetIPAddress.getInstance().getInetAddress(ipAddressString));
     }
 
     public Integer getLL2PAddress() { return this.ll2pAddress; }
@@ -54,7 +75,7 @@ public class AdjacencyRecord extends TableRecordBase {
      */
     @Override
     public String toString() {
-        return "LL2P Address: " + this.ll2pAddress + "; IP Address: " + this.ipAddress;
+        return "LL2P Address: " + Integer.toHexString(this.ll2pAddress) + "; IP Address: " + this.ipAddress;
     }
 
 
