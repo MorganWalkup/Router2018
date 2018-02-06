@@ -7,7 +7,7 @@ package com.morganwalkup.networks.datagramFields;
 
 public interface HeaderField {
 
-    /***
+    /**
      * Returns a string representation of the header field
      * @return String representation of the header field
      */

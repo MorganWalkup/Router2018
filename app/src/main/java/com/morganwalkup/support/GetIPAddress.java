@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by morganwalkup on 2/1/18.
+ * Helper class to generate an InetAddress from an IP address string
  */
 
 public class GetIPAddress {
@@ -20,8 +21,16 @@ public class GetIPAddress {
 
     public static GetIPAddress getInstance() {return ourInstance;}
 
+    /**
+     * Default constructor
+     */
     private GetIPAddress() {}
 
+    /**
+     * Retrieves InetAddress from given hostname
+     * @param hostname An IP address string
+     * @return An InetAddress object for the given IP Address
+     */
     public InetAddress getInetAddress(String hostname){
 
         /*
