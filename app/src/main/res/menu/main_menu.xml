@@ -3,7 +3,11 @@
     <item
         android:id="@+id/showIPAddress"
         android:orderInCategory="110"
-        android:title="@string/IPMenuItem">
-
+        android:title="@string/ip_menu_item">
+    </item>
+    <item
+        android:id="@+id/addAdjacency"
+        android:orderInCategory="110"
+        android:title="@string/add_adjacency_menu_item">
     </item>
 </menu>

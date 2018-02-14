@@ -24,12 +24,15 @@ public class UIManager implements Observer {
     private Activity parentActivity;
     // Provides access to widgets
     private Context context;
+    // Manager for all table ui
+    private TableUI tableUI;
+    public TableUI getTableUI() { return this.tableUI; }
 
     /**
      * Constructor for the UIManager class
      */
     private UIManager() {
-
+        tableUI = new TableUI();
     }
 
     /**

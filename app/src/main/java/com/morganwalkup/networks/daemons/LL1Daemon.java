@@ -118,7 +118,9 @@ public class LL1Daemon extends Observable implements Observer {
             // Create packet
             DatagramPacket sendPacket = new DatagramPacket(packetData, packetLength, destinationAddress, Constants.UDP_PORT);
             // Transmit the packet
-            frameTransmitter.execute(sendPacket);
+            //frameTransmitter.execute(sendPacket); //TODO: Replace frameTransmitter with new instance of SendLayer1Frame?
+            SendLayer1Frame frameSender = new SendLayer1Frame();
+            frameSender.execute(sendPacket);
         } catch (LabException e) {
             Log.i(Constants.LOG_TAG, e.getMessage());
         }

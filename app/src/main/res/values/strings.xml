@@ -9,5 +9,14 @@
     <string name="arp_title">ARP Table</string>
     <string name="routing_table">Routing Table</string>
     <string name="forwarding_table">Forwarding Table</string>
-    <string name="IPMenuItem">Show IP Address</string>
+
+    <string name="ip_menu_item">Show IP Address</string>
+    <string name="add_adjacency_menu_item">Add Adjacency Record</string>
+
+    <string name="adjacency_dialog_ll2p_label">Hex LL2P Address:</string>
+    <string name="adjacency_dialog_ll2p_hint">314159</string>
+    <string name="adjacency_dialog_ip_label">IP Address:</string>
+    <string name="adjacency_dialog_ip_hint">10.0.1.1</string>
+    <string name="adjacency_dialog_confirm">Add Adjacency</string>
+    <string name="adjacency_dialog_cancel">Cancel</string>
 </resources>

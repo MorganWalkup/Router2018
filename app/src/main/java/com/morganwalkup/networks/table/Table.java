@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by morganwalkup on 2/1/18.
@@ -34,6 +35,13 @@ public class Table extends Observable implements TableInterface {
     }
 
     /**
+     * Provides a string representation of this table
+     */
+    public String toString() {
+        return table.toString();
+    }
+
+    /**
      * Returns the table as a list of table records
      * @return A list of table records in the table
      */
@@ -47,6 +55,8 @@ public class Table extends Observable implements TableInterface {
      */
     public TableRecord addItem(TableRecord tableRecord) {
         table.add(tableRecord);
+        //Notify observers of change
+        updateDisplay();
         return tableRecord;
     }
 
@@ -95,6 +105,8 @@ public class Table extends Observable implements TableInterface {
                 table.remove(i);
             }
         }
+        //Notify observers of change
+        updateDisplay();
     }
 
     /**
@@ -103,5 +115,4 @@ public class Table extends Observable implements TableInterface {
     public void Clear() {
         table.clear();
     }
-
 }

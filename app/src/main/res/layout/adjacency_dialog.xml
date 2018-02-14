@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/adjacencyDialogLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="18dip"
+    android:paddingRight="18dip">
+
+    <TextView
+        android:id="@+id/adjacencyDialogLL2PLabel"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:paddingLeft="6dip"
+        android:layout_marginTop="12dp"
+        android:text="@string/adjacency_dialog_ll2p_label" />
+    <EditText
+        android:id="@+id/adjacencyDialogLL2PAddress"
+        android:inputType="textCapCharacters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:hint="@string/adjacency_dialog_ll2p_hint"
+        android:imeOptions="flagNoExtractUi" />
+    <TextView
+        android:id="@+id/adjacencyDialogIPLabel"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:paddingLeft="6dip"
+        android:text="@string/adjacency_dialog_ip_label" />
+    <EditText
+        android:id="@+id/adjacencyDialogIPAddress"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:hint="@string/adjacency_dialog_ip_hint"
+        android:imeOptions="flagNoExtractUi" />
+    <!--
+    <Button
+        android:id="@+id/adjacencyConfirmButton"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/adjacency_dialog_confirm" />
+    <Button
+        android:id="@+id/adjacencyCancelButton"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/adjacency_dialog_cancel" />
+    -->
+
+</LinearLayout>

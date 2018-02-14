@@ -44,6 +44,7 @@ public class Bootloader extends Observable {
         ParentActivity.setParentActivity(parentActivity);
         // Add all observers
         addObserver(UIManager.getInstance());
+        addObserver(UIManager.getInstance().getTableUI());
         addObserver(LL1Daemon.getInstance());
         // Finish setup work
         // Notify observers that we're ready to go
@@ -60,6 +61,7 @@ public class Bootloader extends Observable {
         UIManager.getInstance().displayMessage(Constants.ROUTER_NAME + " is up and Running!");
         UIManager.getInstance().displayMessage("IP Address is " + Constants.IP_ADDRESS);
 
+        /*
         // Create LL2P Frame and display protocol explanation string for testing
         LL2PAddressField destinationAddress = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_DESTINATION_ADDRESS, Constants.TEST_DESTINATION_ADDRESS);
         LL2PAddressField sourceAddress = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_SOURCE_ADDRESS, Constants.MY_SOURCE_ADDRESS);
@@ -73,7 +75,9 @@ public class Bootloader extends Observable {
         String ipAndLL2PAddress = Constants.IP_ADDRESS + Constants.TEST_DESTINATION_ADDRESS;
         AdjacencyRecord adjacencyRecord = TableRecordFactory.getInstance().getItem(Constants.ADJACENCY_RECORD, ipAndLL2PAddress);
         UIManager.getInstance().displayMessage(adjacencyRecord.toString());
+        */
 
+        /*
         // 1. Create adjacency records with various values
         String ipAndLL2PAddress1 = Constants.IP_ADDRESS + Constants.TEST_DESTINATION_ADDRESS;
         AdjacencyRecord adjacencyRecord1 = TableRecordFactory.getInstance().getItem(Constants.ADJACENCY_RECORD, ipAndLL2PAddress1);
@@ -115,5 +119,6 @@ public class Bootloader extends Observable {
         LL1Daemon.getInstance().sendFrame(ll2pFrame1);
         // 3.2.b Send LL2PFrame to your router. Have LL1Daemon write it to log file or display it on screen
         // This is handled by the LL1Daemon's processLayer1FrameBytes method
+        */
     }
 }
