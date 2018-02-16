@@ -53,8 +53,7 @@ public class LL1Daemon extends Observable implements Observer {
     private SendLayer1Frame frameTransmitter;
 
     /** Reference to the singleton daemon class that handles layer 2 processing */
-    //TODO Create ll2pDaemon class
-    //private LL2PDaemon ll2pDaemon;
+    private LL2Daemon ll2Daemon;
 
     /** Create the instance of the LL1Daemon */
     private LL1Daemon() {
@@ -72,8 +71,8 @@ public class LL1Daemon extends Observable implements Observer {
             factory = TableRecordFactory.getInstance();
             addObserver(FrameLogger.getInstance());
             uiManager = UIManager.getInstance();
-            //TODO: Implement LL2PDaemon
-            //ll2pDaemon = LL2PDaemon.getInstance();
+            ll2Daemon = LL2Daemon.getInstance();
+            addObserver(ll2Daemon);
             frameTransmitter = new SendLayer1Frame();
             //Spin off thread for UDP frame reception
             new ReceiveLayer1Frame().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -118,7 +117,6 @@ public class LL1Daemon extends Observable implements Observer {
             // Create packet
             DatagramPacket sendPacket = new DatagramPacket(packetData, packetLength, destinationAddress, Constants.UDP_PORT);
             // Transmit the packet
-            //frameTransmitter.execute(sendPacket); //TODO: Replace frameTransmitter with new instance of SendLayer1Frame?
             SendLayer1Frame frameSender = new SendLayer1Frame();
             frameSender.execute(sendPacket);
         } catch (LabException e) {
@@ -136,10 +134,9 @@ public class LL1Daemon extends Observable implements Observer {
      */
     public void processLayer1FrameBytes(byte[] frame) {
         LL2PFrame ll2pFrame = DatagramFactory.getInstance().getItem(Constants.LL2P_FRAME, new String(frame));
-        Log.i(Constants.LOG_TAG, ll2pFrame.toProtocolExplanationString());
-        //TODO Create Layer 2 frame from byte frame and pass to layer 2 daemon
         //Notify observers
-        notifyObservers(frame);
+        setChanged();
+        notifyObservers(ll2pFrame);
     }
 
 }

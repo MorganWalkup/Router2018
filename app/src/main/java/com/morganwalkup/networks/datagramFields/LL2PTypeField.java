@@ -79,7 +79,7 @@ public class LL2PTypeField implements HeaderField {
      * Constructs an explanation string using the fields of this object
      */
     private void setExplanation() {
-        String explanationString = "LL2P type (0x" + this.toHexString() + ")";
+        String explanationString = "LL2P type: (0x" + this.toHexString() + ")";
         this.explanation = explanationString;
     }
 

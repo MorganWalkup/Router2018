@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 
 import com.morganwalkup.networks.Constants;
 import com.morganwalkup.networks.daemons.LL1Daemon;
+import com.morganwalkup.networks.daemons.LL2Daemon;
 import com.morganwalkup.networks.datagram.LL2PFrame;
 import com.morganwalkup.networks.table.TableInterface;
 import com.morganwalkup.networks.tablerecord.AdjacencyRecord;
@@ -47,16 +48,9 @@ public class AdjacencyTableUI extends SingleTableUI {
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 // Get data from clicked record
                 AdjacencyRecord clickedRecord = (AdjacencyRecord)tableListViewWidget.getItemAtPosition(position);
-                String destinationAddress = Integer.toHexString(clickedRecord.getLL2PAddress());
-                // Construct Dummy LL2P Frame
-                String ll2pString = destinationAddress +
-                        Constants.MY_SOURCE_ADDRESS +
-                        Constants.LL2P_TYPE_IS_TEXT +
-                        Constants.TEST_PAYLOAD +
-                        Constants.TEST_CRC_CODE;
-                LL2PFrame ll2pFrame = DatagramFactory.getInstance().getItem(Constants.LL2P_FRAME, ll2pString);
-                // Transmit LL2P Frame
-                ll1Daemon.sendFrame(ll2pFrame); //TODO: Fix crash on second sendFrame
+                Integer destinationAddress = clickedRecord.getLL2PAddress();
+                // Transmit Dummy LL2P Frame
+                LL2Daemon.getInstance().sendEchoRequest(destinationAddress);
             }
         };
     }

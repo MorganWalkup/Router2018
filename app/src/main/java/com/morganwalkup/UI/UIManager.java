@@ -27,12 +27,17 @@ public class UIManager implements Observer {
     // Manager for all table ui
     private TableUI tableUI;
     public TableUI getTableUI() { return this.tableUI; }
+    // Manager for sniffer ui
+    private SnifferUI snifferUI;
+    public SnifferUI getSnifferUI() { return this.snifferUI; }
 
     /**
      * Constructor for the UIManager class
      */
     private UIManager() {
+
         tableUI = new TableUI();
+        snifferUI = new SnifferUI();
     }
 
     /**

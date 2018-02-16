@@ -8,6 +8,7 @@ import android.util.Log;
 import com.morganwalkup.UI.UIManager;
 import com.morganwalkup.networks.Constants;
 import com.morganwalkup.networks.daemons.LL1Daemon;
+import com.morganwalkup.networks.daemons.LL2Daemon;
 import com.morganwalkup.networks.datagram.LL2PFrame;
 import com.morganwalkup.networks.datagramFields.CRC;
 import com.morganwalkup.networks.datagramFields.DatagramPayloadField;
@@ -45,7 +46,9 @@ public class Bootloader extends Observable {
         // Add all observers
         addObserver(UIManager.getInstance());
         addObserver(UIManager.getInstance().getTableUI());
+        addObserver(UIManager.getInstance().getSnifferUI());
         addObserver(LL1Daemon.getInstance());
+        addObserver(LL2Daemon.getInstance());
         // Finish setup work
         // Notify observers that we're ready to go
         setChanged(); // this lets Java know something has changed!

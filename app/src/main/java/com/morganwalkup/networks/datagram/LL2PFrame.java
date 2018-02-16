@@ -105,9 +105,14 @@ public class LL2PFrame implements Datagram {
      * @param payloadString - The string containing payload contents
      */
     private void makePayloadField(String typeString, String payloadString) {
-        //TODO: implement other payload types
         switch(typeString) {
             case Constants.LL2P_TYPE_IS_TEXT:
+                this.payload = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_PAYLOAD, payloadString);
+                return;
+            case Constants.LL2P_TYPE_IS_ECHO_REQUEST:
+                this.payload = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_PAYLOAD, payloadString);
+                return;
+            case Constants.LL2P_TYPE_IS_ECHO_REPLY:
                 this.payload = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_PAYLOAD, payloadString);
                 return;
             default:
@@ -167,10 +172,9 @@ public class LL2PFrame implements Datagram {
      */
     public String toSummaryString() {
         String summaryString = "";
-        summaryString += (this.destinationAddress.toString() + ", ");
-        summaryString += (this.sourceAddress.toString() + ", ");
-        //if(this.type == Constants.STRING_TYPE)
-        //TODO: Add payload summary to summary string
+        summaryString += (" | " + this.destinationAddress.toHexString());
+        summaryString += (" | " + this.sourceAddress.toHexString());
+        summaryString += (" | " + this.getType().toHexString());
         return summaryString;
     }
 
