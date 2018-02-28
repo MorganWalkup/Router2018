@@ -49,6 +49,12 @@ public class Constants {
     public static final int LL2P_CRC = 14;
     // Unique integer constant for Adjacency Record
     public static final int ADJACENCY_RECORD = 15;
+    // Unique integer constant for LL3P destination address
+    public static final int LL3P_DESTINATION_ADDRESS = 16;
+    // Unique integer constant for LL3P source address
+    public static final int LL3P_SOURCE_ADDRESS = 17;
+    // Unique integer constant for ARP Datagram
+    public static final int ARP_DATAGRAM = 18;
 
     // The length of the LL2P frame address field in bytes
     public static final int LL2P_ADDR_FIELD_LENGTH = 3;
@@ -64,6 +70,12 @@ public class Constants {
     public static final int LL2P_PAYLOAD_FIELD_OFFSET = 8;
     // The length of the LL2P frame CRC field in bytes
     public static final int LL2P_CRC_FIELD_LENGTH = 2;
+    // The length of the LL3P address field in bytes
+    public static final int LL3P_ADDR_FIELD_LENGTH = 2;
+    // The length of the LL3P source address field in bytes
+    public static final int LL3P_SRC_ADDR_FIELD_LENGTH = 1;
+    // The length of the LL3P destination address field in bytes
+    public static final int LL3P_DEST_ADDR_FIELD_LENGTH = 1;
 
     //LL2P Payload types
     public static final String LL2P_TYPE_IS_LL3P = "8001";

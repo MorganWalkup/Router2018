@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.morganwalkup.UI.UIManager;
 import com.morganwalkup.networks.Constants;
+import com.morganwalkup.networks.daemons.ARPDaemon;
 import com.morganwalkup.networks.daemons.LL1Daemon;
 import com.morganwalkup.networks.daemons.LL2Daemon;
 import com.morganwalkup.networks.datagram.LL2PFrame;
@@ -49,6 +50,7 @@ public class Bootloader extends Observable {
         addObserver(UIManager.getInstance().getSnifferUI());
         addObserver(LL1Daemon.getInstance());
         addObserver(LL2Daemon.getInstance());
+        addObserver(ARPDaemon.getInstance());
         // Finish setup work
         // Notify observers that we're ready to go
         setChanged(); // this lets Java know something has changed!
@@ -123,5 +125,8 @@ public class Bootloader extends Observable {
         // 3.2.b Send LL2PFrame to your router. Have LL1Daemon write it to log file or display it on screen
         // This is handled by the LL1Daemon's processLayer1FrameBytes method
         */
+
+        // 4. Test ARPDaemon
+        ARPDaemon.getInstance().testARP();
     }
 }

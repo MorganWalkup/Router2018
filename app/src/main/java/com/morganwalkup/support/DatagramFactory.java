@@ -1,6 +1,7 @@
 package com.morganwalkup.support;
 
 import com.morganwalkup.networks.Constants;
+import com.morganwalkup.networks.datagram.ARPDatagram;
 import com.morganwalkup.networks.datagram.Datagram;
 import com.morganwalkup.networks.datagram.LL2PFrame;
 import com.morganwalkup.networks.datagram.TextDatagram;
@@ -37,6 +38,8 @@ public class DatagramFactory implements Factory<Datagram, String> {
                 return (U) new TextDatagram(inputData);
             case Constants.LL2P_FRAME:
                 return (U) new LL2PFrame(inputData);
+            case Constants.ARP_DATAGRAM:
+                return (U) new ARPDatagram(inputData);
             default:
                 return null;
         }

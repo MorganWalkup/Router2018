@@ -105,20 +105,9 @@ public class LL2PFrame implements Datagram {
      * @param payloadString - The string containing payload contents
      */
     private void makePayloadField(String typeString, String payloadString) {
-        switch(typeString) {
-            case Constants.LL2P_TYPE_IS_TEXT:
-                this.payload = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_PAYLOAD, payloadString);
-                return;
-            case Constants.LL2P_TYPE_IS_ECHO_REQUEST:
-                this.payload = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_PAYLOAD, payloadString);
-                return;
-            case Constants.LL2P_TYPE_IS_ECHO_REPLY:
-                this.payload = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_PAYLOAD, payloadString);
-                return;
-            default:
-                this.payload = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_PAYLOAD, payloadString);
-                return;
-        }
+        String payloadData = typeString + payloadString;
+        this.payload = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_PAYLOAD, payloadData);
+        return;
     }
 
     /**

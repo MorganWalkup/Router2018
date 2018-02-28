@@ -6,6 +6,7 @@ import com.morganwalkup.networks.datagramFields.DatagramPayloadField;
 import com.morganwalkup.networks.datagramFields.LL2PAddressField;
 import com.morganwalkup.networks.datagramFields.LL2PTypeField;
 import com.morganwalkup.networks.datagramFields.HeaderField;
+import com.morganwalkup.networks.datagramFields.LL3PAddressField;
 
 /**
  * Factory generating HeaderFields
@@ -46,6 +47,10 @@ public class HeaderFieldFactory implements Factory<HeaderField, String> {
                 return (U) new DatagramPayloadField(inputData);
             case Constants.LL2P_CRC:
                 return (U) new CRC(inputData);
+            case Constants.LL3P_DESTINATION_ADDRESS:
+                return (U) new LL3PAddressField(inputData, false);
+            case Constants.LL3P_SOURCE_ADDRESS:
+                return (U) new LL3PAddressField(inputData, true);
             default:
                 return null;
         }

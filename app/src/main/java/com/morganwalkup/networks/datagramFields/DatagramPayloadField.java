@@ -24,11 +24,14 @@ public class DatagramPayloadField implements HeaderField {
     }
 
     /**
-     * Constructor accepting a string payload
-     * @param text String data used to construct a datagram
+     * Constructor accepting a string of payload data in the form "<PAYLOAD_TYPE><PAYLOAD_CONTENT>"
+     * @param payloadData String data used to construct a datagram
      */
-    public DatagramPayloadField(String text) {
-        this.packet = DatagramFactory.getInstance().getItem(Constants.TEXT_DATAGRAM, text);
+    public DatagramPayloadField(String payloadData) {
+        String payloadType = payloadData.substring(0, Constants.LL2P_TYPE_FIELD_LENGTH);
+        int typeInt = Integer.parseInt(payloadType, Constants.HEX_BASE);
+        String payloadContent = payloadData.substring(Constants.LL2P_TYPE_FIELD_LENGTH);
+        this.packet = DatagramFactory.getInstance().getItem(typeInt, payloadContent);
     }
 
     /**

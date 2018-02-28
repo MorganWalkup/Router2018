@@ -79,7 +79,37 @@ public class LL2PTypeField implements HeaderField {
      * Constructs an explanation string using the fields of this object
      */
     private void setExplanation() {
-        String explanationString = "LL2P type: (0x" + this.toHexString() + ")";
+        String typeHexString = this.toHexString();
+        String typeName = "Unknown";
+        switch(typeHexString) {
+            case Constants.LL2P_TYPE_IS_LL3P:
+                typeName = "LL3P Packet";
+                break;
+            case Constants.LL2P_TYPE_IS_RESERVED:
+                typeName = "Reserved";
+                break;
+            case Constants.LL2P_TYPE_IS_LRP:
+                typeName = "LRP";
+                break;
+            case Constants.LL2P_TYPE_IS_ECHO_REQUEST:
+                typeName = "Echo Request";
+                break;
+            case Constants.LL2P_TYPE_IS_ECHO_REPLY:
+                typeName = "Echo Reply";
+                break;
+            case Constants.LL2P_TYPE_IS_ARP_REQUEST:
+                typeName = "ARP Request";
+                break;
+            case Constants.LL2P_TYPE_IS_ARP_REPLY:
+                typeName = "ARP Reply";
+                break;
+            case Constants.LL2P_TYPE_IS_TEXT:
+                typeName = "Text";
+                break;
+            default:
+                break;
+        }
+        String explanationString = "LL2P type: " + typeName;
         this.explanation = explanationString;
     }
 

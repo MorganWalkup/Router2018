@@ -3,6 +3,7 @@ package com.morganwalkup.UI;
 import android.app.Activity;
 import android.content.Context;
 
+import com.morganwalkup.networks.daemons.ARPDaemon;
 import com.morganwalkup.networks.daemons.LL1Daemon;
 import com.morganwalkup.router2018.R;
 import com.morganwalkup.support.Bootloader;
@@ -51,11 +52,10 @@ public class TableUI implements Runnable, Observer {
                     LL1Daemon.getInstance().getAdjacencyTable(),
                     LL1Daemon.getInstance()
                     );
+            arpTableUI = new SingleTableUI(activity,
+                    R.id.arp_list,
+                    ARPDaemon.getInstance().getARPTable());
             //TODO: In later labs, create other table ui's
-            //arpTableUI = new SingleTableUI(parentActivity,
-            //        R.id.arpTableListView,
-            //        ARPDaemon.getInstance().getARPTable());
-
         }
     }
 
