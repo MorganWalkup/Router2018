@@ -10,6 +10,7 @@ import com.morganwalkup.networks.Constants;
 import com.morganwalkup.networks.daemons.ARPDaemon;
 import com.morganwalkup.networks.daemons.LL1Daemon;
 import com.morganwalkup.networks.daemons.LL2Daemon;
+import com.morganwalkup.networks.daemons.Scheduler;
 import com.morganwalkup.networks.datagram.LL2PFrame;
 import com.morganwalkup.networks.datagramFields.CRC;
 import com.morganwalkup.networks.datagramFields.DatagramPayloadField;
@@ -51,6 +52,7 @@ public class Bootloader extends Observable {
         addObserver(LL1Daemon.getInstance());
         addObserver(LL2Daemon.getInstance());
         addObserver(ARPDaemon.getInstance());
+        addObserver(Scheduler.getInstance());
         // Finish setup work
         // Notify observers that we're ready to go
         setChanged(); // this lets Java know something has changed!
@@ -127,6 +129,7 @@ public class Bootloader extends Observable {
         */
 
         // 4. Test ARPDaemon
-        ARPDaemon.getInstance().testARP();
+        //ARPDaemon.getInstance().testARP();
+        //TODO: Figure out how to expire records in ARP Table
     }
 }

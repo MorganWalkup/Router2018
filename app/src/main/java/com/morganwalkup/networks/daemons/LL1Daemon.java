@@ -97,6 +97,7 @@ public class LL1Daemon extends Observable implements Observer {
         String inputData = ipAddress + LL2PAddress;
         AdjacencyRecord adjacencyRecord = factory.getItem(Constants.ADJACENCY_RECORD, inputData);
         adjacencyTable.addItem(adjacencyRecord);
+        ll2Daemon.sendARPRequest(Integer.parseInt(LL2PAddress, Constants.HEX_BASE));
         // Notify observers of change
         setChanged();
         notifyObservers(adjacencyRecord);

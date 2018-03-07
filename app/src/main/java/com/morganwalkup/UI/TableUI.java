@@ -64,6 +64,7 @@ public class TableUI implements Runnable, Observer {
      */
     @Override
     public void run() {
-        //TODO implement timer for this method
+        //TODO update tables when run is called
+        arpTableUI.updateView();
     }
 }

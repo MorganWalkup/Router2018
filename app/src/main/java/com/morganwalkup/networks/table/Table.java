@@ -54,7 +54,11 @@ public class Table extends Observable implements TableInterface {
      * @return The table record added
      */
     public TableRecord addItem(TableRecord tableRecord) {
-        table.add(tableRecord);
+        try {
+            this.getItem(tableRecord.getKey());
+        } catch(LabException e){
+            table.add(tableRecord);
+        }
         //Notify observers of change
         updateDisplay();
         return tableRecord;

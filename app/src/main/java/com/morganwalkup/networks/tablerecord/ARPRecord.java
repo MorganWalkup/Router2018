@@ -1,6 +1,7 @@
 package com.morganwalkup.networks.tablerecord;
 
 import com.morganwalkup.networks.Constants;
+import com.morganwalkup.support.Utilities;
 
 /**
  * Holds data for an ARP record within the ARP table
@@ -54,7 +55,7 @@ public class ARPRecord extends TableRecordBase {
      */
     @Override
     public Integer getKey() {
-        return this.ll2pAddress;
+        return this.ll3pAddress;
     }
 
     /**
@@ -63,7 +64,7 @@ public class ARPRecord extends TableRecordBase {
      */
     public String toString() {
         return "LL2P Address: " + Integer.toHexString(this.ll2pAddress) +
-                ", LL3P Address: " + Integer.toHexString(this.ll3pAddress);
+                ", LL3P Address: " + Utilities.padHexString(Integer.toHexString(this.ll3pAddress), Constants.LL3P_ADDR_FIELD_LENGTH);
     }
 
 }

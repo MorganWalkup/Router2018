@@ -13,6 +13,8 @@ public class ARPDatagram implements Datagram {
 
     /** DatagramHeaderField containing ll3p address */
     private LL3PAddressField ll3pAddress;
+    public LL3PAddressField getLL3PAddress() { return this.ll3pAddress; }
+    public Integer getLL3PAddressInteger() { return this.ll3pAddress.getAddress(); }
 
     /**
      * Constructor accepting string

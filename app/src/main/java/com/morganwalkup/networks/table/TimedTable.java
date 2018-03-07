@@ -1,7 +1,11 @@
 package com.morganwalkup.networks.table;
 
+import android.util.Log;
+
+import com.morganwalkup.networks.Constants;
 import com.morganwalkup.networks.tablerecord.TableRecord;
 import com.morganwalkup.networks.tablerecord.TableRecordBase;
+import com.morganwalkup.support.LabException;
 
 import java.util.ArrayList;
 
@@ -43,8 +47,12 @@ public class TimedTable extends Table {
      * @param key - The key of the record to find
      */
     public void touch(Integer key) {
-        TableRecordBase record = (TableRecordBase)this.table.get(key);
-        record.updateTime();
+        try {
+            TableRecordBase record = (TableRecordBase) getItem(key);
+            record.updateTime();
+        } catch(LabException e) {
+            Log.i(Constants.LOG_TAG, e.getMessage());
+        }
     }
 
 }

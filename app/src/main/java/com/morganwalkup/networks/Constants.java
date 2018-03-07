@@ -23,8 +23,10 @@ public class Constants {
     public static final String ROUTER_NAME = "WalkieTalkup";
     // Tag used to search log files from the debugger
     public static final String LOG_TAG = "WALKIETALKUP: ";
-    // Hex code identifying this router
+    // LL2P Address hex code identifying this router
     public static final String MY_SOURCE_ADDRESS = "FA1AF1";
+    // LL3P Address hex code identifying this router
+    public static final String MY_LL3P_SOURCE_ADDRESS = "0D01";
     // Hex code identifying the UDP port used for transmission
     public static final int UDP_PORT = 49999;
 
@@ -77,7 +79,7 @@ public class Constants {
     // The length of the LL3P destination address field in bytes
     public static final int LL3P_DEST_ADDR_FIELD_LENGTH = 1;
 
-    //LL2P Payload types
+    // LL2P Payload types
     public static final String LL2P_TYPE_IS_LL3P = "8001";
     public static final String LL2P_TYPE_IS_RESERVED = "8002";
     public static final String LL2P_TYPE_IS_LRP = "8003";
@@ -91,6 +93,15 @@ public class Constants {
     public static final int HEX_BASE = 16;
     // The maximum length for a summary string
     public static final int SUMMARY_LENGTH = 20;
+
+    // Number of runnable threads
+    public static final int THREAD_COUNT = 1;
+    // The time it takes to boot up the router in seconds
+    public static final int ROUTER_BOOT_TIME = 7;
+    // Time between UI updates in seconds
+    public static final int UI_UPDATE_INTERVAL = 1;
+    // Max age for ARP records in seconds
+    public static final int ARP_RECORD_MAX_AGE = 5;
 
     static {
         IP_ADDRESS = getLocalIpAddress();

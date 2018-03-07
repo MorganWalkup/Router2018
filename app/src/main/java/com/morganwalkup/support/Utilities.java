@@ -44,7 +44,7 @@ public class Utilities {
      */
     static public String convertHexToASCII(String hexString) {
         StringBuilder asciiString = new StringBuilder();
-        for (int i = 0; i < hexString.length(); i+=2) {
+        for (int i = 0; i < (hexString.length()-2); i+=2) {
             String byteString = hexString.substring(i, i+2);
             asciiString.append((char)Integer.parseInt(byteString, Constants.HEX_BASE));
         }

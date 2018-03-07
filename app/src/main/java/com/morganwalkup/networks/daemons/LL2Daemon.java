@@ -2,6 +2,8 @@ package com.morganwalkup.networks.daemons;
 
 import com.morganwalkup.UI.UIManager;
 import com.morganwalkup.networks.Constants;
+import com.morganwalkup.networks.datagram.ARPDatagram;
+import com.morganwalkup.networks.datagram.Datagram;
 import com.morganwalkup.networks.datagram.LL2PFrame;
 import com.morganwalkup.support.Bootloader;
 import com.morganwalkup.support.DatagramFactory;
@@ -54,15 +56,30 @@ public class LL2Daemon implements Observer {
     public void processLL2PFrame(LL2PFrame frame) {
         if(frame.getDestinationAddress().toTransmissionString().equalsIgnoreCase(Constants.MY_SOURCE_ADDRESS)) {
             //TODO: Lab 7: Check CRC
-            if(frame.getType().toTransmissionString().equals(Constants.LL2P_TYPE_IS_ECHO_REQUEST)) {
-                answerEchoRequest(frame);
+            switch(frame.getType().toTransmissionString()) {
+                case Constants.LL2P_TYPE_IS_ECHO_REQUEST:
+                    answerEchoRequest(frame);
+                    break;
+                case Constants.LL2P_TYPE_IS_ARP_REPLY:
+                    ARPDaemon.getInstance().processARPReply(
+                            frame.getSourceAddress().getAddress(),
+                            (ARPDatagram)frame.getPayload().getPayload());
+                    break;
+                case Constants.LL2P_TYPE_IS_ARP_REQUEST:
+                    Integer ll2pAddress = frame.getSourceAddress().getAddress();
+                    ARPDatagram arpDatagram = (ARPDatagram)frame.getPayload().getPayload();
+                    ARPDaemon.getInstance().processARPRequest(ll2pAddress, arpDatagram);
+                    sendARPReply(frame.getSourceAddress().getAddress());
+                    break;
+                default:
+                    break;
             }
         }
     }
 
     /**
      * Builds an echo reply frame and requests transmission from the LL1Daemon
-      * @param frame
+      * @param frame - The LL2PFrame holding the echo request
      */
     public void answerEchoRequest(LL2PFrame frame) {
         // Construct LL2P echo reply
@@ -78,15 +95,47 @@ public class LL2Daemon implements Observer {
 
     /**
      * Sends an LL2P frame echo request to the address provided
-     * @param LL2PAddress - Destination address for the LL2P Frame
+     * @param ll2pAddress - Destination address for the LL2P Frame
      */
-    public void sendEchoRequest(Integer LL2PAddress) {
-        String destinationAddress = Integer.toHexString(LL2PAddress);
+    public void sendEchoRequest(Integer ll2pAddress) {
+        String destinationAddress = Integer.toHexString(ll2pAddress);
         // Construct LL2P echo request
         String ll2pString = destinationAddress +
                 Constants.MY_SOURCE_ADDRESS +
                 Constants.LL2P_TYPE_IS_ECHO_REQUEST +
                 Constants.TEST_PAYLOAD +
+                Constants.TEST_CRC_CODE;
+        LL2PFrame ll2pFrame = DatagramFactory.getInstance().getItem(Constants.LL2P_FRAME, ll2pString);
+        // Transmit LL2P Frame
+        ll1Daemon.sendFrame(ll2pFrame);
+    }
+
+    /**
+     * Sends an ARP request
+     */
+    public void sendARPRequest(Integer ll2pAddress) {
+        String destinationAddress = Integer.toHexString(ll2pAddress);
+        // Construct LL2P ARP request
+        String ll2pString = destinationAddress +
+                Constants.MY_SOURCE_ADDRESS +
+                Constants.LL2P_TYPE_IS_ARP_REQUEST +
+                Constants.MY_LL3P_SOURCE_ADDRESS +
+                Constants.TEST_CRC_CODE;
+        LL2PFrame ll2pFrame = DatagramFactory.getInstance().getItem(Constants.LL2P_FRAME, ll2pString);
+        // Transmit LL2P Frame
+        ll1Daemon.sendFrame(ll2pFrame);
+    }
+
+    /**
+     * Sends an ARP reply
+     */
+    public void sendARPReply(Integer ll2pAddress) {
+        String destinationAddress = Integer.toHexString(ll2pAddress);
+        // Construct LL2P ARP request
+        String ll2pString = destinationAddress +
+                Constants.MY_SOURCE_ADDRESS +
+                Constants.LL2P_TYPE_IS_ARP_REPLY +
+                Constants.MY_LL3P_SOURCE_ADDRESS +
                 Constants.TEST_CRC_CODE;
         LL2PFrame ll2pFrame = DatagramFactory.getInstance().getItem(Constants.LL2P_FRAME, ll2pString);
         // Transmit LL2P Frame

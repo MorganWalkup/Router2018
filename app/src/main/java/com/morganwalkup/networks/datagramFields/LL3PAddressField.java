@@ -13,6 +13,7 @@ public class LL3PAddressField implements HeaderField {
 
     /** The address is stored here */
     private Integer address;
+    public Integer getAddress() { return this.address; }
     /** The network part of the address is saved here */
     private Integer networkNumber;
     /** The host portion of the address is saved here */
@@ -33,8 +34,7 @@ public class LL3PAddressField implements HeaderField {
         String networkString = dataString.substring(0,Constants.LL3P_SRC_ADDR_FIELD_LENGTH * 2);
         this.networkNumber = Integer.parseInt(networkString, Constants.HEX_BASE);
 
-        String hostString = dataString.substring(Constants.LL3P_SRC_ADDR_FIELD_LENGTH * 2,
-                Constants.LL3P_DEST_ADDR_FIELD_LENGTH * 2);
+        String hostString = dataString.substring(Constants.LL3P_SRC_ADDR_FIELD_LENGTH * 2);
         this.hostNumber = Integer.parseInt(hostString, Constants.HEX_BASE);
 
         this.isSourceAddress = isSourceAddress;
@@ -71,7 +71,7 @@ public class LL3PAddressField implements HeaderField {
      * @return Hex representation
      */
     public String toHexString() {
-        return Integer.toHexString(address);
+        return Utilities.padHexString(Integer.toHexString(address), Constants.LL3P_ADDR_FIELD_LENGTH);
     }
 
     /**

@@ -60,8 +60,8 @@ public class SingleTableUI implements Observer {
         parentActivity.runOnUiThread(new Runnable() {
             @Override // this is a mini-Runnable class’s run method!
             public void run() {
-                // notify the OS that the dataset has changed. It will update screen!
-                arrayAdapter.notifyDataSetChanged();
+            // notify the OS that the dataset has changed. It will update screen!
+            arrayAdapter.notifyDataSetChanged();
             }
         });
     }
