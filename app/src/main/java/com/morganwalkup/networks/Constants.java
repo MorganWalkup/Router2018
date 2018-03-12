@@ -57,6 +57,14 @@ public class Constants {
     public static final int LL3P_SOURCE_ADDRESS = 17;
     // Unique integer constant for ARP Datagram
     public static final int ARP_DATAGRAM = 18;
+    // Unique integer constant for LRP Sequence Number field
+    public static final int LRP_SEQ_NUM = 19;
+    // Unique integer constant for LRP Route Count field
+    public static final int LRP_ROUTE_COUNT = 20;
+    // Unique integer constant for LRP Network Distance Pair field
+    public static final int LRP_NET_DIST_PAIR = 21;
+    // Unique integer constant for LRP packets
+    public static final int LRP_PACKET = 22;
 
     // The length of the LL2P frame address field in bytes
     public static final int LL2P_ADDR_FIELD_LENGTH = 3;
@@ -78,6 +86,16 @@ public class Constants {
     public static final int LL3P_SRC_ADDR_FIELD_LENGTH = 1;
     // The length of the LL3P destination address field in bytes
     public static final int LL3P_DEST_ADDR_FIELD_LENGTH = 1;
+    // The length of the LRP sequence number in nibbles (4 bits)
+    public static final int LRP_SEQ_NUM_NIBBLES = 1;
+    // The length of the LRP sequence number in nibbles (4 bits)
+    public static final int LRP_ROUTE_COUNT_NIBBLES = 1;
+    // The length of the LRP network number field in bytes
+    public static final int LRP_NETWORK_FIELD_LENGTH = 1;
+    // The length of the LRP distance field in bytes
+    public static final int LRP_DISTANCE_FIELD_LENGTH = 1;
+    // The length of the LRP network distance pair field in bytes
+    public static final int LRP_NET_DIST_PAIR_LENGTH = 2;
 
     // LL2P Payload types
     public static final String LL2P_TYPE_IS_LL3P = "8001";
@@ -102,6 +120,8 @@ public class Constants {
     public static final int UI_UPDATE_INTERVAL = 1;
     // Max age for ARP records in seconds
     public static final int ARP_RECORD_MAX_AGE = 5;
+    // Max age for routing records in seconds
+    public static final int ROUTING_RECORD_MAX_AGE = 5;
 
     static {
         IP_ADDRESS = getLocalIpAddress();

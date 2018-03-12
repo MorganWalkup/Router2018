@@ -50,7 +50,7 @@ public class Table extends Observable implements TableInterface {
     }
 
     /**
-     * Adds a table record to the table
+     * Adds a table record to the table if it does not already exist
      * @return The table record added
      */
     public TableRecord addItem(TableRecord tableRecord) {

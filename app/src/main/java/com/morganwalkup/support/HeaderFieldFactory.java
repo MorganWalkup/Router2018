@@ -7,6 +7,9 @@ import com.morganwalkup.networks.datagramFields.LL2PAddressField;
 import com.morganwalkup.networks.datagramFields.LL2PTypeField;
 import com.morganwalkup.networks.datagramFields.HeaderField;
 import com.morganwalkup.networks.datagramFields.LL3PAddressField;
+import com.morganwalkup.networks.datagramFields.LRPRouteCount;
+import com.morganwalkup.networks.datagramFields.LRPSequenceNumber;
+import com.morganwalkup.networks.datagramFields.NetworkDistancePair;
 
 /**
  * Factory generating HeaderFields
@@ -51,6 +54,12 @@ public class HeaderFieldFactory implements Factory<HeaderField, String> {
                 return (U) new LL3PAddressField(inputData, false);
             case Constants.LL3P_SOURCE_ADDRESS:
                 return (U) new LL3PAddressField(inputData, true);
+            case Constants.LRP_SEQ_NUM:
+                return (U) new LRPSequenceNumber(inputData);
+            case Constants.LRP_ROUTE_COUNT:
+                return (U) new LRPRouteCount(inputData);
+            case Constants.LRP_NET_DIST_PAIR:
+                return (U) new NetworkDistancePair(inputData);
             default:
                 return null;
         }

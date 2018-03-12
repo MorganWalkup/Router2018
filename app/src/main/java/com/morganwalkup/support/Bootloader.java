@@ -1,6 +1,7 @@
 package com.morganwalkup.support;
 
 import java.net.InetAddress;
+import java.util.List;
 import java.util.Observable;
 import android.app.Activity;
 import android.util.Log;
@@ -16,8 +17,10 @@ import com.morganwalkup.networks.datagramFields.CRC;
 import com.morganwalkup.networks.datagramFields.DatagramPayloadField;
 import com.morganwalkup.networks.datagramFields.LL2PAddressField;
 import com.morganwalkup.networks.datagramFields.LL2PTypeField;
+import com.morganwalkup.networks.table.RoutingTable;
 import com.morganwalkup.networks.table.Table;
 import com.morganwalkup.networks.tablerecord.AdjacencyRecord;
+import com.morganwalkup.networks.tablerecord.RoutingRecord;
 import com.morganwalkup.networks.tablerecord.TableRecord;
 
 /**
@@ -130,6 +133,124 @@ public class Bootloader extends Observable {
 
         // 4. Test ARPDaemon
         //ARPDaemon.getInstance().testARP();
-        //TODO: Figure out how to expire records in ARP Table
+
+        // 5. Test Routing/Forwarding Tables
+        RoutingTable routingTable = new RoutingTable();
+        RoutingTable forwardingTable = new RoutingTable();
+        // 5.1 Add routes
+        Integer networkNumber = 2;
+        Integer distance = 2;
+        Integer nextHop = Integer.parseInt("0501", Constants.HEX_BASE);
+        RoutingRecord route = new RoutingRecord(networkNumber, distance, nextHop);
+        routingTable.addNewRoute(route);
+        // 5.2 Expire routes
+        routingTable.expireRecords(Constants.ROUTING_RECORD_MAX_AGE);
+        // 5.3 Update routes
+        networkNumber = 3;
+        distance = 3;
+        nextHop = Integer.parseInt("0501", Constants.HEX_BASE);
+        RoutingRecord firstRoute = new RoutingRecord(networkNumber, distance, nextHop);
+        distance = 4;
+        RoutingRecord updatedRoute = new RoutingRecord(networkNumber, distance, nextHop);
+        routingTable.addNewRoute(firstRoute);
+        routingTable.addNewRoute(updatedRoute);
+        // 5.4 Get Best Routes
+        networkNumber = 4;
+        distance = 3;
+        nextHop = Integer.parseInt("0601", Constants.HEX_BASE);
+        RoutingRecord record1 = new RoutingRecord(networkNumber, distance, nextHop);
+        routingTable.addNewRoute(record1);
+        networkNumber = 4;
+        distance = 1;
+        nextHop = Integer.parseInt("0701", Constants.HEX_BASE);
+        RoutingRecord record2 = new RoutingRecord(networkNumber, distance, nextHop);
+        routingTable.addNewRoute(record2);
+        networkNumber = 5;
+        distance = 1;
+        nextHop = Integer.parseInt("0601", Constants.HEX_BASE);
+        RoutingRecord record3 = new RoutingRecord(networkNumber, distance, nextHop);
+        routingTable.addNewRoute(record3);
+        networkNumber = 5;
+        distance = 7;
+        nextHop = Integer.parseInt("0701", Constants.HEX_BASE);
+        RoutingRecord record4 = new RoutingRecord(networkNumber, distance, nextHop);
+        routingTable.addNewRoute(record4);
+        List<RoutingRecord> betterRecords = routingTable.getBestRoutes();
+        // 5.5 Reset Age
+        int record4Age = 0;
+        int record4Key = record4.getKey();
+        try {
+            record4Age = routingTable.getItem(record4Key).getAgeInSeconds();
+        } catch(LabException e) {
+            Log.i(Constants.LOG_TAG, e.getMessage());
+        }
+        RoutingRecord record4Update = new RoutingRecord(networkNumber, distance, nextHop);
+        routingTable.addNewRoute(record4Update);
+        try {
+            record4Age = routingTable.getItem(record4Key).getAgeInSeconds();
+        } catch(LabException e) {
+            Log.i(Constants.LOG_TAG, e.getMessage());
+        }
+        // 5.6 Remove All Routes from one Source
+        networkNumber = 4;
+        distance = 1;
+        nextHop = Integer.parseInt("B000", Constants.HEX_BASE);
+        RoutingRecord badRecord1 = new RoutingRecord(networkNumber, distance, nextHop);
+        routingTable.addNewRoute(badRecord1);
+        networkNumber = 5;
+        distance = 1;
+        nextHop = Integer.parseInt("B000", Constants.HEX_BASE);
+        RoutingRecord badRecord2 = new RoutingRecord(networkNumber, distance, nextHop);
+        routingTable.addNewRoute(badRecord2);
+        routingTable.removeRoutesFrom(nextHop);
+        // 5.7 Create Forwarding Table
+        Integer betterHop = Integer.parseInt("BBBB", Constants.HEX_BASE);
+        networkNumber = 10;
+        distance = 2;
+        RoutingRecord betterRecord1 = new RoutingRecord(networkNumber, distance, betterHop);
+        routingTable.addNewRoute(betterRecord1);
+        networkNumber = 11;
+        distance = 2;
+        RoutingRecord betterRecord2 = new RoutingRecord(networkNumber, distance, betterHop);
+        routingTable.addNewRoute(betterRecord2);
+        networkNumber = 12;
+        distance = 2;
+        RoutingRecord betterRecord3 = new RoutingRecord(networkNumber, distance, betterHop);
+        routingTable.addNewRoute(betterRecord3);
+
+        Integer worstHop = Integer.parseInt("FFFF", Constants.HEX_BASE);
+        networkNumber = 10;
+        distance = 3;
+        RoutingRecord worstRecord1 = new RoutingRecord(networkNumber, distance, worstHop);
+        routingTable.addNewRoute(worstRecord1);
+        networkNumber = 11;
+        distance = 3;
+        RoutingRecord worstRecord2 = new RoutingRecord(networkNumber, distance, worstHop);
+        routingTable.addNewRoute(worstRecord2);
+        networkNumber = 12;
+        distance = 3;
+        RoutingRecord worstRecord3 = new RoutingRecord(networkNumber, distance, worstHop);
+        routingTable.addNewRoute(worstRecord3);
+
+        List<RoutingRecord> betterRoutes = routingTable.getBestRoutes();
+        forwardingTable.addRoutes(betterRoutes);
+        // 5.8 Update routing table, then update forwarding table
+        Integer bestHop = Integer.parseInt("AAAA", Constants.HEX_BASE);
+        networkNumber = 10;
+        distance = 1;
+        RoutingRecord bestRecord1 = new RoutingRecord(networkNumber, distance, bestHop);
+        routingTable.addNewRoute(bestRecord1);
+        networkNumber = 11;
+        distance = 1;
+        RoutingRecord bestRecord2 = new RoutingRecord(networkNumber, distance, bestHop);
+        routingTable.addNewRoute(bestRecord2);
+        networkNumber = 12;
+        distance = 1;
+        RoutingRecord bestRecord3 = new RoutingRecord(networkNumber, distance, bestHop);
+        routingTable.addNewRoute(bestRecord3);
+
+        List<RoutingRecord> bestRoutes = routingTable.getBestRoutes();
+        forwardingTable.clear();
+        forwardingTable.addRoutes(bestRoutes);
     }
 }
