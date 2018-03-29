@@ -7,6 +7,7 @@ import com.morganwalkup.networks.datagramFields.LRPSequenceNumber;
 import com.morganwalkup.networks.datagramFields.NetworkDistancePair;
 import com.morganwalkup.support.HeaderFieldFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,6 +55,7 @@ public class LRPPacket implements Datagram {
         cursor = cursor + Constants.LRP_ROUTE_COUNT_NIBBLES;
         this.count = HeaderFieldFactory.getInstance().getItem(Constants.LRP_ROUTE_COUNT, routeCountString);
 
+        this.routes = new ArrayList<>();
         for(int i = 0; i < count.getRouteCount(); i++) {
             String netDistPairString = dataString.substring(
                     cursor,
@@ -61,7 +63,7 @@ public class LRPPacket implements Datagram {
             cursor = cursor + Constants.LRP_NET_DIST_PAIR_LENGTH * 2;
             NetworkDistancePair netDistPair = HeaderFieldFactory.getInstance().getItem(
                     Constants.LRP_NET_DIST_PAIR, netDistPairString);
-            routes.add(netDistPair);
+            this.routes.add(netDistPair);
         }
     }
 

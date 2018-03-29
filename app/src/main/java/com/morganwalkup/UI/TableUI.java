@@ -2,13 +2,18 @@ package com.morganwalkup.UI;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
+import com.morganwalkup.networks.Constants;
 import com.morganwalkup.networks.daemons.ARPDaemon;
 import com.morganwalkup.networks.daemons.LL1Daemon;
+import com.morganwalkup.networks.daemons.LRPDaemon;
+import com.morganwalkup.networks.tablerecord.TableRecord;
 import com.morganwalkup.router2018.R;
 import com.morganwalkup.support.Bootloader;
 import com.morganwalkup.support.ParentActivity;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.lang.Runnable;
@@ -45,17 +50,23 @@ public class TableUI implements Runnable, Observer {
     public void update(Observable observable, Object o) {
         if(observable instanceof Bootloader) {
             Activity activity = ParentActivity.getParentActivity();
-            Context baseContext = activity.getBaseContext();
             adjacencyUI = new AdjacencyTableUI(
                     activity,
                     R.id.adjacency_list,
                     LL1Daemon.getInstance().getAdjacencyTable(),
-                    LL1Daemon.getInstance()
-                    );
-            arpTableUI = new SingleTableUI(activity,
+                    LL1Daemon.getInstance());
+            arpTableUI = new SingleTableUI(
+                    activity,
                     R.id.arp_list,
                     ARPDaemon.getInstance().getARPTable());
-            //TODO: In later labs, create other table ui's
+            routingTableUI = new SingleTableUI(
+                    activity,
+                    R.id.routing_list,
+                    LRPDaemon.getInstance().getRouteTable());
+            forwardingUI = new SingleTableUI(
+                    activity,
+                    R.id.forwarding_list,
+                    LRPDaemon.getInstance().getForwardingTable());
         }
     }
 
@@ -64,7 +75,8 @@ public class TableUI implements Runnable, Observer {
      */
     @Override
     public void run() {
-        //TODO update tables when run is called
         arpTableUI.updateView();
+        routingTableUI.updateView();
+        forwardingUI.updateView();
     }
 }

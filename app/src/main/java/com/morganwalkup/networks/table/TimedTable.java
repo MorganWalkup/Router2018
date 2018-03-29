@@ -30,15 +30,22 @@ public class TimedTable extends Table {
      * @return - An array list of the removed records
      */
     public ArrayList<TableRecord> expireRecords(Integer maxAgeAllowed) {
-        ArrayList<TableRecord> removedRecords = new ArrayList<TableRecord>();
+        ArrayList<TableRecord> remainingRecords = new ArrayList<>();
+        ArrayList<TableRecord> removedRecords = new ArrayList<>();
 
-        for(TableRecord record : this.table ) {
-            if(record.getAgeInSeconds() > maxAgeAllowed) {
-                this.table.remove(record);
-                removedRecords.add(record);
+        if(this.table.size() > 0) {
+            for (TableRecord record : this.table) {
+                if (record.getAgeInSeconds() > maxAgeAllowed) {
+                    removedRecords.add(record);
+                } else {
+                    remainingRecords.add(record);
+                }
             }
         }
+        this.table.clear();
+        this.table.addAll(remainingRecords);
 
+        updateDisplay();
         return removedRecords;
     }
 
@@ -51,8 +58,10 @@ public class TimedTable extends Table {
             TableRecordBase record = (TableRecordBase) getItem(key);
             record.updateTime();
         } catch(LabException e) {
-            Log.i(Constants.LOG_TAG, e.getMessage());
+            e.printStackTrace();
         }
+
+        updateDisplay();
     }
 
 }

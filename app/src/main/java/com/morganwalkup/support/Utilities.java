@@ -34,7 +34,7 @@ public class Utilities {
             outputString = "0" + outputString;
         }
 
-        return outputString;
+        return outputString.toUpperCase();
     }
 
     /**
@@ -75,6 +75,20 @@ public class Utilities {
      */
     static public int getTimeInSeconds() {
         return (int) (Calendar.getInstance().getTimeInMillis()/1000 - baseDateInSeconds);
+    }
+
+    /**
+     * Format LL3PAddress in the form XX.YY
+     * @param ll3pAddress - The ll3pAddress integer to format
+     * @return
+     */
+    static public String formatLL3PAddress(Integer ll3pAddress) {
+        String ll3pAddressString = Integer.toHexString(ll3pAddress);
+        ll3pAddressString = padHexString(ll3pAddressString, Constants.LL3P_ADDR_FIELD_LENGTH);
+        String ll3pNetworkString = ll3pAddressString.substring(0,Constants.LL3P_SRC_ADDR_FIELD_LENGTH * 2);
+        String ll3pHostString = ll3pAddressString.substring(Constants.LL3P_SRC_ADDR_FIELD_LENGTH * 2);
+
+        return ll3pNetworkString + "." + ll3pHostString;
     }
 
 }

@@ -46,6 +46,9 @@ public class DatagramPayloadField implements HeaderField {
             case Constants.LL2P_TYPE_IS_ARP_REPLY:
                 this.packet = DatagramFactory.getInstance().getItem(Constants.ARP_DATAGRAM, payloadContent);
                 break;
+            case Constants.LL2P_TYPE_IS_LRP:
+                this.packet = DatagramFactory.getInstance().getItem(Constants.LRP_PACKET, payloadContent);
+                break;
             default:
                 break;
         }

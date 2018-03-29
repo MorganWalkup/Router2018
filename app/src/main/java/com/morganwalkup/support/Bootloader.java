@@ -11,6 +11,7 @@ import com.morganwalkup.networks.Constants;
 import com.morganwalkup.networks.daemons.ARPDaemon;
 import com.morganwalkup.networks.daemons.LL1Daemon;
 import com.morganwalkup.networks.daemons.LL2Daemon;
+import com.morganwalkup.networks.daemons.LRPDaemon;
 import com.morganwalkup.networks.daemons.Scheduler;
 import com.morganwalkup.networks.datagram.LL2PFrame;
 import com.morganwalkup.networks.datagramFields.CRC;
@@ -52,9 +53,12 @@ public class Bootloader extends Observable {
         addObserver(UIManager.getInstance());
         addObserver(UIManager.getInstance().getTableUI());
         addObserver(UIManager.getInstance().getSnifferUI());
+        addObserver(FrameLogger.getInstance());
+        //FrameLogger.getInstance().addObserver(UIManager.getInstance().getSnifferUI());
         addObserver(LL1Daemon.getInstance());
         addObserver(LL2Daemon.getInstance());
         addObserver(ARPDaemon.getInstance());
+        addObserver(LRPDaemon.getInstance());
         addObserver(Scheduler.getInstance());
         // Finish setup work
         // Notify observers that we're ready to go
@@ -68,8 +72,8 @@ public class Bootloader extends Observable {
      * Runs basic tests to verify operation of the router
      */
     private void test() {
-        UIManager.getInstance().displayMessage(Constants.ROUTER_NAME + " is up and Running!");
-        UIManager.getInstance().displayMessage("IP Address is " + Constants.IP_ADDRESS);
+        //UIManager.getInstance().displayMessage(Constants.ROUTER_NAME + " is up and Running!");
+        //UIManager.getInstance().displayMessage("IP Address is " + Constants.IP_ADDRESS);
 
         /*
         // Create LL2P Frame and display protocol explanation string for testing
@@ -134,9 +138,10 @@ public class Bootloader extends Observable {
         // 4. Test ARPDaemon
         //ARPDaemon.getInstance().testARP();
 
+        /*
         // 5. Test Routing/Forwarding Tables
-        RoutingTable routingTable = new RoutingTable();
-        RoutingTable forwardingTable = new RoutingTable();
+        RoutingTable routingTable = LRPDaemon.getInstance().getRouteTable();
+        RoutingTable forwardingTable = LRPDaemon.getInstance().getForwardingTable();
         // 5.1 Add routes
         Integer networkNumber = 2;
         Integer distance = 2;
@@ -252,5 +257,6 @@ public class Bootloader extends Observable {
         List<RoutingRecord> bestRoutes = routingTable.getBestRoutes();
         forwardingTable.clear();
         forwardingTable.addRoutes(bestRoutes);
+        */
     }
 }

@@ -35,7 +35,6 @@ public class UIManager implements Observer {
      * Constructor for the UIManager class
      */
     private UIManager() {
-
         tableUI = new TableUI();
         snifferUI = new SnifferUI();
     }

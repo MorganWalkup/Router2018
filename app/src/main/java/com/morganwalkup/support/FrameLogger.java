@@ -29,7 +29,7 @@ public class FrameLogger extends Observable implements Observer {
 
     /** Initializes an empty frameList */
     private FrameLogger() {
-        frameList = new ArrayList<LL2PFrame>();
+        frameList = new ArrayList<>();
     }
 
     /**

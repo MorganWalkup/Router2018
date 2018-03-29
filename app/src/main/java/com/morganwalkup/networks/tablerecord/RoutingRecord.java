@@ -1,6 +1,8 @@
 package com.morganwalkup.networks.tablerecord;
 
+import com.morganwalkup.networks.Constants;
 import com.morganwalkup.networks.datagramFields.NetworkDistancePair;
+import com.morganwalkup.support.Utilities;
 
 /**
  * A record in the routing table. Contains destination network, distance, and next hop
@@ -32,6 +34,27 @@ public class RoutingRecord extends TableRecordBase {
     }
 
     /**
+     * Constructor accepting a string of data in the format <NW><NH><Distance>
+     * @param dataString - String of routing record data
+     */
+    public RoutingRecord(String dataString) {
+        super();
+
+        //TODO: Create constants for routing record data lengths
+        String networkString = dataString.substring(0, 2);
+        String nextHopString = dataString.substring(2, 6);
+        String distanceString = dataString.substring(6);
+
+        Integer networkNumber = Integer.parseInt(networkString, Constants.HEX_BASE);
+        Integer nextHop = Integer.parseInt(nextHopString, Constants.HEX_BASE);
+        Integer distance = Integer.parseInt(distanceString);
+
+        this.networkDistancePair = new NetworkDistancePair(networkNumber, distance);
+        this.nextHop = nextHop;
+        this.key = networkNumber*256*256 + nextHop;
+    }
+
+    /**
      * Return the distance of this routing record
      * @return The distance of this routing record
      */
@@ -45,5 +68,15 @@ public class RoutingRecord extends TableRecordBase {
      */
     public Integer getNetwork() {
         return this.networkDistancePair.getNetwork();
+    }
+
+    @Override
+    public String toString() {
+        String resultString = "";
+        resultString += "NW: " + networkDistancePair.getNetwork().toString() + " | ";
+        resultString += "Dist: " + networkDistancePair.getDistance().toString() + " | ";
+        resultString += "NH: " + Utilities.formatLL3PAddress(nextHop) + " | ";
+        resultString += "Age: " + this.getAgeInSeconds();
+        return resultString;
     }
 }

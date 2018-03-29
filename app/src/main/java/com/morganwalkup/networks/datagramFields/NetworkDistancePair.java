@@ -40,6 +40,14 @@ public class NetworkDistancePair implements HeaderField {
     }
 
     /**
+     * Increments this NDPair's distance by 1
+     * Used when receiving LRP records from neighbors
+     */
+    public void incrementDistance() {
+        this.distance = this.distance + 1;
+    }
+
+    /**
      * Returns a string representation of the header field
      * @return String representation of the header field
      */

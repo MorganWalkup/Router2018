@@ -89,7 +89,9 @@ public class Table extends Observable implements TableInterface {
      */
     public TableRecord getItem(Integer key) throws LabException {
         //Scan the table for given tableRecord
-        for(TableRecord record : table) {
+        for(int i = 0; i < this.table.size(); i++) {
+            TableRecord record = this.table.get(i);
+            Integer recordKey = record.getKey();
             if(record.getKey().equals(key)) {
                 return record;
             }

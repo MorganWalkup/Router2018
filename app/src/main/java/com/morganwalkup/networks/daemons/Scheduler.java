@@ -27,7 +27,7 @@ public class Scheduler implements Observer {
     /** Reference to the ARP Daemon */
     private ARPDaemon arpDaemon;
     /** Reference to the LRP Daemon */
-    //private LRPDaemon lrpDaemon;
+    private LRPDaemon lrpDaemon;
     /** Reference to the TableUI runnable, updated every second */
     private TableUI tableUI;
 
@@ -46,14 +46,22 @@ public class Scheduler implements Observer {
         if(observable instanceof Bootloader) {
             this.tableUI = UIManager.getInstance().getTableUI();
             this.arpDaemon = ARPDaemon.getInstance();
+            this.lrpDaemon = LRPDaemon.getInstance();
             threadManager = new ScheduledThreadPoolExecutor(Constants.THREAD_COUNT);
-            threadManager.scheduleAtFixedRate(tableUI,
+            threadManager.scheduleAtFixedRate(
+                    tableUI,
                     Constants.ROUTER_BOOT_TIME,
                     Constants.UI_UPDATE_INTERVAL,
                     TimeUnit.SECONDS);
-            threadManager.scheduleAtFixedRate(arpDaemon,
+            threadManager.scheduleAtFixedRate(
+                    arpDaemon,
                     Constants.ROUTER_BOOT_TIME,
                     Constants.UI_UPDATE_INTERVAL,
+                    TimeUnit.SECONDS);
+            threadManager.scheduleAtFixedRate(
+                    lrpDaemon,
+                    Constants.ROUTER_BOOT_TIME,
+                    Constants.LRP_UPDATE_INTERVAL,
                     TimeUnit.SECONDS);
         }
     }

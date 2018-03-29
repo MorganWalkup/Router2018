@@ -38,6 +38,7 @@ public class RoutingTable extends TimedTable {
      */
     public void removeItem(TableRecord newEntry) {
         removeItem(newEntry.getKey());
+        updateDisplay();
     }
 
     /**
@@ -113,6 +114,8 @@ public class RoutingTable extends TimedTable {
         }
 
         this.table = newRouteList;
+
+        updateDisplay();
     }
 
     /**
@@ -181,6 +184,8 @@ public class RoutingTable extends TimedTable {
                 this.addNewRoute(routes.get(i));
             }
         }
+
+        updateDisplay();
     }
 
     /**
@@ -188,5 +193,6 @@ public class RoutingTable extends TimedTable {
      */
     public void clear() {
         this.table.clear();
+        updateDisplay();
     }
 }

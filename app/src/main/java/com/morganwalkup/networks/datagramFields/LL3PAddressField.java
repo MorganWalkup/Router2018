@@ -16,8 +16,10 @@ public class LL3PAddressField implements HeaderField {
     public Integer getAddress() { return this.address; }
     /** The network part of the address is saved here */
     private Integer networkNumber;
+    public Integer getNetworkNumber() { return this.networkNumber; }
     /** The host portion of the address is saved here */
     private Integer hostNumber;
+    public Integer getHostNumber() { return this.hostNumber; }
     /** True if this object stores a source address */
     private Boolean isSourceAddress;
     /** Contains an explanation string. Something like "LL3P Source Address 14.12 (0x0E0C)" */

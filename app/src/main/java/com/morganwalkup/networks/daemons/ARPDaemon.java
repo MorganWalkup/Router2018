@@ -21,18 +21,16 @@ import java.util.Observer;
  * Created by morganwalkup on 2/23/18.
  */
 
-public class ARPDaemon implements Observer, Runnable {
+public class ARPDaemon extends Observable implements Observer, Runnable{
 
     /** The one and only instance of this class */
     private static final ARPDaemon ourInstance = new ARPDaemon();
     public static ARPDaemon getInstance() {
         return ourInstance;
     }
-
     /** Contains the ARP table */
     private TimedTable arpTable;
     public TimedTable getARPTable(){ return this.arpTable; }
-
     /** Reference to the ll2Daemon */
     private LL2Daemon ll2Daemon;
 
@@ -41,6 +39,7 @@ public class ARPDaemon implements Observer, Runnable {
      */
     ARPDaemon() {
         arpTable = new TimedTable();
+        addObserver(LRPDaemon.getInstance());
     }
 
     /**
@@ -66,7 +65,7 @@ public class ARPDaemon implements Observer, Runnable {
     /**
      * Creates an ARP record and adds it to the table
      */
-    private void addARPEntry(Integer ll2pAddress, Integer ll3pAddress) {
+    public void addARPEntry(Integer ll2pAddress, Integer ll3pAddress) {
         ARPRecord arpRecord = new ARPRecord(ll2pAddress, ll3pAddress);
         this.arpTable.addItem(arpRecord);
     }
@@ -75,7 +74,7 @@ public class ARPDaemon implements Observer, Runnable {
      * Touches the ARP record with the LL3PAddress, or does nothing if that record doesn't exist
      * @param ll3pAddress
      */
-    private void updateARPEntry(Integer ll3pAddress) {
+    public void updateARPEntry(Integer ll3pAddress) {
         try {
             ARPRecord arpRecord = (ARPRecord)this.arpTable.getItem(ll3pAddress);
             this.arpTable.touch(ll3pAddress);
@@ -102,8 +101,8 @@ public class ARPDaemon implements Observer, Runnable {
      * Called whenever a scheduler wants to spin off a thread for an ARP daemon job
      */
     public void run() {
-        Log.i(Constants.LOG_TAG, "Run() called to expire ARP Entries");
-        this.arpTable.expireRecords(Constants.ARP_RECORD_MAX_AGE);
+        //TODO: Uncomment record expiration
+        //this.arpTable.expireRecords(Constants.ARP_RECORD_MAX_AGE);
     }
 
     /**
@@ -126,7 +125,7 @@ public class ARPDaemon implements Observer, Runnable {
      * @return - A list of Integer LL3P addresses
      */
     public List<Integer> getAttachedNodes() {
-        List<Integer> ll3pList = new ArrayList<Integer>();
+        List<Integer> ll3pList = new ArrayList<>();
         List<TableRecord> arpList = this.arpTable.getTableAsList();
         for(int i = 0; i < arpList.size(); i++) {
             ARPRecord arpRecord = (ARPRecord)arpList.get(i);

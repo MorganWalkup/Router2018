@@ -135,6 +135,7 @@ public class LL1Daemon extends Observable implements Observer {
      */
     public void processLayer1FrameBytes(byte[] frame) {
         LL2PFrame ll2pFrame = DatagramFactory.getInstance().getItem(Constants.LL2P_FRAME, new String(frame));
+        LL2Daemon.getInstance().processLL2PFrame(ll2pFrame);
         //Notify observers
         setChanged();
         notifyObservers(ll2pFrame);

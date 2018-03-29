@@ -1,12 +1,16 @@
 package com.morganwalkup.UI;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.morganwalkup.networks.Constants;
+import com.morganwalkup.networks.table.RoutingTable;
 import com.morganwalkup.networks.table.Table;
 import com.morganwalkup.networks.table.TableInterface;
+import com.morganwalkup.networks.table.TimedTable;
 import com.morganwalkup.networks.tablerecord.TableRecord;
 import com.morganwalkup.router2018.R;
 
@@ -41,29 +45,18 @@ public class SingleTableUI implements Observer {
      */
     public SingleTableUI(Activity parentActivity, int view, TableInterface tableInterface) {
         this.parentActivity = parentActivity;
-        tableToDisplay = (Table)tableInterface;
-        arrayAdapter = new ArrayAdapter(parentActivity.getBaseContext(),
-                R.layout.table_list_item, tableInterface.getTableAsList());
+        this.tableToDisplay = (Table)tableInterface;
+        tableRecordList = tableToDisplay.getTableAsList();
+        arrayAdapter = new ArrayAdapter(
+                parentActivity.getBaseContext(),
+                R.layout.table_list_item,
+                tableRecordList);
         //ArrayList arrayList = new ArrayList(arrayAdapter);
         //Connect list view to adapter
-        tableListViewWidget = (ListView) parentActivity.findViewById(view);
+        tableListViewWidget = parentActivity.findViewById(view);
         tableListViewWidget.setAdapter(arrayAdapter);
         //Observe changes in table object
         tableToDisplay.addObserver(this);
-    }
-
-    /**
-     * Updates SingleTableUI view on the UI thread
-     */
-    public void updateView(){
-        // Force all our work here to be on the UI thread!
-        parentActivity.runOnUiThread(new Runnable() {
-            @Override // this is a mini-Runnable class’s run method!
-            public void run() {
-            // notify the OS that the dataset has changed. It will update screen!
-            arrayAdapter.notifyDataSetChanged();
-            }
-        });
     }
 
     /**
@@ -74,7 +67,23 @@ public class SingleTableUI implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         if(observable instanceof Table) {
+            //tableToDisplay = (Table)observable;
+            //tableRecordList = tableToDisplay.getTableAsList();
             updateView();
         }
+    }
+
+    /**
+     * Updates SingleTableUI view on the UI thread
+     */
+    public void updateView(){
+        // Force all our work here to be on the UI thread!
+        parentActivity.runOnUiThread(new Runnable() {
+            @Override // this is a mini-Runnable class’s run method!
+            public void run() {
+                // notify the OS that the dataset has changed. It will update screen!
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

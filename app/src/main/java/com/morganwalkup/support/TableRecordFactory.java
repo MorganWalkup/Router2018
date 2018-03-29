@@ -2,6 +2,7 @@ package com.morganwalkup.support;
 
 import com.morganwalkup.networks.Constants;
 import com.morganwalkup.networks.tablerecord.AdjacencyRecord;
+import com.morganwalkup.networks.tablerecord.RoutingRecord;
 import com.morganwalkup.networks.tablerecord.TableRecord;
 
 import java.net.InetAddress;
@@ -37,6 +38,8 @@ public class TableRecordFactory implements Factory<TableRecord,String> {
         switch(type) {
             case Constants.ADJACENCY_RECORD:
                 return (U) new AdjacencyRecord(inputData);
+            case Constants.ROUTING_RECORD:
+                return (U) new RoutingRecord(inputData);
             default:
                 return null;
         }

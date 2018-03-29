@@ -27,6 +27,16 @@ public class Constants {
     public static final String MY_SOURCE_ADDRESS = "FA1AF1";
     // LL3P Address hex code identifying this router
     public static final String MY_LL3P_SOURCE_ADDRESS = "0D01";
+    // LL3P Address integer identifying this router
+    public static final int MY_LL3P_SOURCE_ADDRESS_INT = 0x0D01;
+    // LL3P Network address integer identifying this router's network
+    public static final int MY_LL3P_NETWORK_NUMBER = 0x0D;
+    // LL3P Network address string identifying this router's ll3p network
+    public static final String MY_LL3P_NETWORK_STRING = "0D";
+    // LL3P Host address integer identifying this router within the network
+    public static final int MY_LL3P_HOST_NUMBER = 0x01;
+    // LL3P Network address string identifying this router's ll3p host
+    public static final String MY_LL3P_HOST_STRING = "01";
     // Hex code identifying the UDP port used for transmission
     public static final int UDP_PORT = 49999;
 
@@ -65,6 +75,8 @@ public class Constants {
     public static final int LRP_NET_DIST_PAIR = 21;
     // Unique integer constant for LRP packets
     public static final int LRP_PACKET = 22;
+    // Unique integer constant for Routing Records
+    public static final int ROUTING_RECORD = 23;
 
     // The length of the LL2P frame address field in bytes
     public static final int LL2P_ADDR_FIELD_LENGTH = 3;
@@ -115,13 +127,15 @@ public class Constants {
     // Number of runnable threads
     public static final int THREAD_COUNT = 1;
     // The time it takes to boot up the router in seconds
-    public static final int ROUTER_BOOT_TIME = 7;
+    public static final int ROUTER_BOOT_TIME = 5;
     // Time between UI updates in seconds
     public static final int UI_UPDATE_INTERVAL = 1;
+    // Time between LRP updates in seconds
+    public static final int LRP_UPDATE_INTERVAL = 1;
     // Max age for ARP records in seconds
-    public static final int ARP_RECORD_MAX_AGE = 5;
+    public static final int ARP_RECORD_MAX_AGE = 10;
     // Max age for routing records in seconds
-    public static final int ROUTING_RECORD_MAX_AGE = 5;
+    public static final int ROUTING_RECORD_MAX_AGE = 10;
 
     static {
         IP_ADDRESS = getLocalIpAddress();

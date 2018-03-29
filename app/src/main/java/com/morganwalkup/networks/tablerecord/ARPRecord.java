@@ -63,8 +63,12 @@ public class ARPRecord extends TableRecordBase {
      * @return - String representation of the ARP record
      */
     public String toString() {
-        return "LL2P Address: " + Integer.toHexString(this.ll2pAddress) +
-                ", LL3P Address: " + Utilities.padHexString(Integer.toHexString(this.ll3pAddress), Constants.LL3P_ADDR_FIELD_LENGTH);
+        String ll2pAddressString = Integer.toHexString(this.ll2pAddress);
+        String ll3pAddressString = Utilities.formatLL3PAddress(this.ll3pAddress);
+
+        return "LL2P: " + ll2pAddressString +
+                " | LL3P: " + ll3pAddressString +
+                " | Age: " + this.getAgeInSeconds();
     }
 
 }
