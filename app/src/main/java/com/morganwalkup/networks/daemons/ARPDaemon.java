@@ -101,8 +101,7 @@ public class ARPDaemon extends Observable implements Observer, Runnable{
      * Called whenever a scheduler wants to spin off a thread for an ARP daemon job
      */
     public void run() {
-        //TODO: Uncomment record expiration
-        //this.arpTable.expireRecords(Constants.ARP_RECORD_MAX_AGE);
+        this.arpTable.expireRecords(Constants.ARP_RECORD_MAX_AGE);
     }
 
     /**
