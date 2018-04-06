@@ -5,6 +5,7 @@ import com.morganwalkup.networks.Constants;
 import com.morganwalkup.networks.datagram.ARPDatagram;
 import com.morganwalkup.networks.datagram.Datagram;
 import com.morganwalkup.networks.datagram.LL2PFrame;
+import com.morganwalkup.networks.datagram.LL3PDatagram;
 import com.morganwalkup.networks.datagram.LRPPacket;
 import com.morganwalkup.networks.datagramFields.DatagramPayloadField;
 import com.morganwalkup.support.Bootloader;
@@ -73,6 +74,11 @@ public class LL2Daemon implements Observer {
                     LRPPacket lrpPacket = (LRPPacket)payload.getPayload();
                     Integer ll2pSource = frame.getSourceAddress().getAddress();
                     LRPDaemon.getInstance().receiveNewLRP(lrpPacket, ll2pSource);
+                    break;
+                case Constants.LL2P_TYPE_IS_LL3P:
+                    LL3PDatagram packet = (LL3PDatagram)frame.getPayload().getPayload();
+                    Integer ll2pSourceAddress = frame.getSourceAddress().getAddress();
+                    LL3Daemon.getInstance().processLL3PPacket(packet, ll2pSourceAddress);
                     break;
                 default:
                     break;
@@ -159,6 +165,24 @@ public class LL2Daemon implements Observer {
                 Constants.MY_SOURCE_ADDRESS +
                 Constants.LL2P_TYPE_IS_LRP +
                 lrp.toTransmissionString() +
+                Constants.TEST_CRC_CODE;
+        LL2PFrame ll2pFrame = DatagramFactory.getInstance().getItem(Constants.LL2P_FRAME, ll2pString);
+        // Transmit LL2P Frame
+        ll1Daemon.sendFrame(ll2pFrame);
+    }
+
+    /**
+     * Wraps the given LL3PDatagram in an LL2PFrame and sends it to nextHop
+     * @param packet - The LL3PDatagram to transmit
+     * @param ll2NextHop - The ll2 destination for the frame
+     */
+    public void sendLL3PDatagram(LL3PDatagram packet, Integer ll2NextHop) {
+        String destinationAddress = Integer.toHexString(ll2NextHop);
+        // Construct LL2P frame containing LRP update
+        String ll2pString = destinationAddress +
+                Constants.MY_SOURCE_ADDRESS +
+                Constants.LL2P_TYPE_IS_LL3P +
+                packet.toTransmissionString() +
                 Constants.TEST_CRC_CODE;
         LL2PFrame ll2pFrame = DatagramFactory.getInstance().getItem(Constants.LL2P_FRAME, ll2pString);
         // Transmit LL2P Frame

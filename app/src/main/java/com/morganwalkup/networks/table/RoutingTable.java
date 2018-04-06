@@ -60,7 +60,7 @@ public class RoutingTable extends TimedTable {
 
     /**
      * Returns the next hop for the given network
-     * @param network - A remote network number
+     * @param network - A remote network number XX
      * @return - The LL3P address of the next hop,
      * or -1 if no record is found with the remote network number
      */
@@ -83,12 +83,12 @@ public class RoutingTable extends TimedTable {
      */
     public List<RoutingRecord> getRouteListExcluding(Integer ll3pAddress) {
         //The list of routes excluding the given ll3pAddress
-        List<RoutingRecord> newRouteList = new ArrayList<RoutingRecord>();
+        List<RoutingRecord> newRouteList = new ArrayList<>();
 
         //Loop through table and add non-excluded records to newRouteList
         for(int i = 0; i < this.table.size(); i++) {
             RoutingRecord record = (RoutingRecord)this.table.get(i);
-            if(record.getNextHop() != ll3pAddress) {
+            if(!record.getNextHop().equals(ll3pAddress)) {
                 newRouteList.add(record);
             }
         }

@@ -40,10 +40,14 @@ public class RoutingRecord extends TableRecordBase {
     public RoutingRecord(String dataString) {
         super();
 
-        //TODO: Create constants for routing record data lengths
-        String networkString = dataString.substring(0, 2);
-        String nextHopString = dataString.substring(2, 6);
-        String distanceString = dataString.substring(6);
+        String networkString = dataString.substring(
+                0,
+                Constants.LL3P_NETWORK_ADDR_FIELD_LENGTH * 2);
+        String nextHopString = dataString.substring(
+                Constants.LL3P_NETWORK_ADDR_FIELD_LENGTH * 2,
+                Constants.LL3P_NETWORK_ADDR_FIELD_LENGTH * 2 + Constants.LL3P_ADDR_FIELD_LENGTH * 2);
+        String distanceString = dataString.substring(
+                Constants.LL3P_NETWORK_ADDR_FIELD_LENGTH * 2 + Constants.LL3P_ADDR_FIELD_LENGTH * 2);
 
         Integer networkNumber = Integer.parseInt(networkString, Constants.HEX_BASE);
         Integer nextHop = Integer.parseInt(nextHopString, Constants.HEX_BASE);

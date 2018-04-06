@@ -51,7 +51,7 @@ public class ARPRecord extends TableRecordBase {
 
     /**
      * Returns the key for this record
-     * @return - the ll2pAddress of this ARP record
+     * @return - the ll3pAddress of this ARP record
      */
     @Override
     public Integer getKey() {

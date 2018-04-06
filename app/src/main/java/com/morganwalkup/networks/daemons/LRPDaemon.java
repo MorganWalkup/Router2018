@@ -1,18 +1,12 @@
 package com.morganwalkup.networks.daemons;
 
-import android.net.Network;
-import android.net.NetworkRequest;
 import android.util.Log;
 
-import com.morganwalkup.UI.UIManager;
 import com.morganwalkup.networks.Constants;
 import com.morganwalkup.networks.datagram.LRPPacket;
-import com.morganwalkup.networks.datagramFields.LL3PAddressField;
 import com.morganwalkup.networks.datagramFields.NetworkDistancePair;
 import com.morganwalkup.networks.table.RoutingTable;
 import com.morganwalkup.networks.table.Table;
-import com.morganwalkup.networks.table.TimedTable;
-import com.morganwalkup.networks.tablerecord.ARPRecord;
 import com.morganwalkup.networks.tablerecord.RoutingRecord;
 import com.morganwalkup.networks.tablerecord.TableRecord;
 import com.morganwalkup.support.Bootloader;
@@ -101,7 +95,7 @@ public class LRPDaemon implements Observer, Runnable {
         for (int i = 0; i < neighborAddresses.size(); i++) {
             Integer ll3pAddress = neighborAddresses.get(i);
             String ll3pAddressString = Utilities.padHexString(Integer.toHexString(ll3pAddress), Constants.LL3P_ADDR_FIELD_LENGTH);
-            String ll3pNetworkString = ll3pAddressString.substring(0, Constants.LL3P_SRC_ADDR_FIELD_LENGTH * 2);
+            String ll3pNetworkString = ll3pAddressString.substring(0, Constants.LL3P_NETWORK_ADDR_FIELD_LENGTH * 2);
 
             String neighborRecordData = ll3pNetworkString + ll3pAddressString + 1;
             RoutingRecord neighborRecord = TableRecordFactory.getInstance().getItem(Constants.ROUTING_RECORD, neighborRecordData);
@@ -115,13 +109,10 @@ public class LRPDaemon implements Observer, Runnable {
 
         //5. Using the list of adjacent nodes from step 3 above, send a routing update to every known neighbor. You will exclude routes learned from that router in this update in order to avoid the count-to-infinity problem that exists with Distance-Vector routing protocols.
         for (int i = 0; i < neighborAddresses.size(); i++) {
-            // Get neighbor's ll3p network number
+            // Get neighbor's ll3p network address
             Integer ll3pAddress = neighborAddresses.get(i);
-            String ll3pAddressString = Integer.toHexString(ll3pAddress);
-            String ll3pNetworkString = ll3pAddressString.substring(0, Constants.LL3P_SRC_ADDR_FIELD_LENGTH * 2);
-            Integer ll3pNetworkNumber = Integer.parseInt(ll3pNetworkString, Constants.HEX_BASE);
             // Send routing update excluding routes from neighbor
-            List<RoutingRecord> recordsToSend = this.forwardingTable.getRouteListExcluding(ll3pNetworkNumber);
+            List<RoutingRecord> recordsToSend = this.forwardingTable.getRouteListExcluding(ll3pAddress);
             String networkDistancePairs = "";
             for (int j = 0; j < recordsToSend.size(); j++) {
                 RoutingRecord recordToSend = recordsToSend.get(j);
@@ -131,7 +122,9 @@ public class LRPDaemon implements Observer, Runnable {
                     + Integer.toHexString(this.sequenceNumber)
                     + Integer.toHexString(recordsToSend.size())
                     + networkDistancePairs;
+
             LRPPacket routingUpdate = DatagramFactory.getInstance().getItem(Constants.LRP_PACKET, routingUpdateData);
+            Log.i(Constants.LOG_TAG, "Sent LRP Update: " + routingUpdate.toTransmissionString());
             sendUpdate(routingUpdate, ll3pAddress);
         }
 
@@ -157,13 +150,17 @@ public class LRPDaemon implements Observer, Runnable {
 
     /**
      * Called by the LL2Daemon when a LRP packet is received
-     * @param lrpPacket - The data of the lrp packet
+     * @param lrpPacketData - The data of the lrp packet
      * @param ll2pSource - Source address of the LRP packet
      */
-    public void receiveNewLRP(byte[] lrpPacket, Integer ll2pSource) {
-        // TODO: Touch the ARP Entry that contains the LL3P address that sent us this LRP packet
+    public void receiveNewLRP(byte[] lrpPacketData, Integer ll2pSource) {
+        // Create lrp packet
+        String lrpString = new String(lrpPacketData);
+        LRPPacket lrpPacket = DatagramFactory.getInstance().getItem(Constants.LRP_PACKET, lrpString);
+        // Touch the ARP Entry that contains the LL3P address that sent us this LRP packet
+        arpDaemon.getARPTable().touch(lrpPacket.getLL3PAddressField().getAddress());
         // Process lrpPacket
-        processLRP(lrpPacket);
+        processLRPPacket(lrpPacket);
     }
 
     /**
@@ -202,15 +199,17 @@ public class LRPDaemon implements Observer, Runnable {
             RoutingRecord record = new RoutingRecord(
                     ndPair.getNetwork(),
                     ndPair.getDistance(),
-                    lrp.getLL3PAddressField().getNetworkNumber()
+                    lrp.getLL3PAddressField().getAddress()
             );
             newRoutingRecords.add(record);
         }
-        this.routeTable.addRoutes(newRoutingRecords);
-        // Update forwarding table
-        List<RoutingRecord> bestRoutes = this.routeTable.getBestRoutes();
-        this.forwardingTable.clear();
-        this.forwardingTable.addRoutes(bestRoutes);
+        if(newRoutingRecords.size() > 0) {
+            this.routeTable.addRoutes(newRoutingRecords);
+            // Update forwarding table
+            List<RoutingRecord> bestRoutes = this.routeTable.getBestRoutes();
+            this.forwardingTable.clear();
+            this.forwardingTable.addRoutes(bestRoutes);
+        }
     }
 
     /**

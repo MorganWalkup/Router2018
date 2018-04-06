@@ -87,7 +87,7 @@ public class LL2PAddressField implements HeaderField {
      * Constructs an explanation string using the fields of this object
      */
     private void setExplanation() {
-        String explanationString = (this.isSourceAddress) ? "Source LL2P Address: " : "Destination LL2P Address: ";
+        String explanationString = (this.isSourceAddress) ? "LL2P Source Address: " : "LL2P Destination Address: ";
         explanationString += this.toHexString();
         this.explanation = explanationString;
     }

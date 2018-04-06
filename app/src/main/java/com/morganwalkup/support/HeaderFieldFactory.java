@@ -7,6 +7,10 @@ import com.morganwalkup.networks.datagramFields.LL2PAddressField;
 import com.morganwalkup.networks.datagramFields.LL2PTypeField;
 import com.morganwalkup.networks.datagramFields.HeaderField;
 import com.morganwalkup.networks.datagramFields.LL3PAddressField;
+import com.morganwalkup.networks.datagramFields.LL3PChecksum;
+import com.morganwalkup.networks.datagramFields.LL3PIdentifierField;
+import com.morganwalkup.networks.datagramFields.LL3PTTLField;
+import com.morganwalkup.networks.datagramFields.LL3PTypeField;
 import com.morganwalkup.networks.datagramFields.LRPRouteCount;
 import com.morganwalkup.networks.datagramFields.LRPSequenceNumber;
 import com.morganwalkup.networks.datagramFields.NetworkDistancePair;
@@ -50,16 +54,26 @@ public class HeaderFieldFactory implements Factory<HeaderField, String> {
                 return (U) new DatagramPayloadField(inputData);
             case Constants.LL2P_CRC:
                 return (U) new CRC(inputData);
-            case Constants.LL3P_DESTINATION_ADDRESS:
-                return (U) new LL3PAddressField(inputData, false);
-            case Constants.LL3P_SOURCE_ADDRESS:
-                return (U) new LL3PAddressField(inputData, true);
             case Constants.LRP_SEQ_NUM:
                 return (U) new LRPSequenceNumber(inputData);
             case Constants.LRP_ROUTE_COUNT:
                 return (U) new LRPRouteCount(inputData);
             case Constants.LRP_NET_DIST_PAIR:
                 return (U) new NetworkDistancePair(inputData);
+            case Constants.LL3P_DESTINATION_ADDRESS:
+                return (U) new LL3PAddressField(inputData, false);
+            case Constants.LL3P_SOURCE_ADDRESS:
+                return (U) new LL3PAddressField(inputData, true);
+            case Constants.LL3P_TYPE:
+                return (U) new LL3PTypeField(inputData);
+            case Constants.LL3P_IDENTIFIER:
+                return (U) new LL3PIdentifierField(inputData);
+            case Constants.LL3P_TTL:
+                return (U) new LL3PTTLField(inputData);
+            case Constants.LL3P_PAYLOAD_FIELD:
+                return (U) new DatagramPayloadField(inputData);
+            case Constants.LL3P_CHECKSUM:
+                return (U) new LL3PChecksum(inputData);
             default:
                 return null;
         }

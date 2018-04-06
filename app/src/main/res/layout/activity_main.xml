@@ -54,8 +54,9 @@
             android:layout_alignParentStart="true"
             android:layout_below="@id/sniffer-title" />
 
-        <TextView
-            android:id="@+id/protocols"
+        <ScrollView
+            android:id="@+id/protocols-scrollview"
+            android:scrollbars="vertical"
             android:background="@android:drawable/dialog_holo_light_frame"
             android:layout_width="match_parent"
             android:layout_height="100dp"
@@ -64,12 +65,17 @@
             android:paddingStart="15dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@id/packets-list"
-            android:ellipsize="none"
-            android:scrollHorizontally="false"
-            android:fontFamily="monospace"
-            android:textSize="10sp"
-            android:text="@string/protocols_title" />
+            android:layout_below="@id/packets-list">
+            <TextView
+                android:id="@+id/protocols"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:scrollHorizontally="false"
+                android:fontFamily="monospace"
+                android:textSize="10sp"
+                android:text="@string/protocols_title" />
+        </ScrollView>
 
         <TextView
             android:id="@+id/hex-packets"
@@ -81,7 +87,7 @@
             android:paddingStart="15dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@id/protocols"
+            android:layout_below="@id/protocols-scrollview"
             android:ellipsize="none"
             android:scrollHorizontally="false"
             android:fontFamily="monospace"

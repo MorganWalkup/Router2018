@@ -11,6 +11,7 @@ import com.morganwalkup.networks.Constants;
 import com.morganwalkup.networks.daemons.ARPDaemon;
 import com.morganwalkup.networks.daemons.LL1Daemon;
 import com.morganwalkup.networks.daemons.LL2Daemon;
+import com.morganwalkup.networks.daemons.LL3Daemon;
 import com.morganwalkup.networks.daemons.LRPDaemon;
 import com.morganwalkup.networks.daemons.Scheduler;
 import com.morganwalkup.networks.datagram.LL2PFrame;
@@ -57,6 +58,7 @@ public class Bootloader extends Observable {
         //FrameLogger.getInstance().addObserver(UIManager.getInstance().getSnifferUI());
         addObserver(LL1Daemon.getInstance());
         addObserver(LL2Daemon.getInstance());
+        addObserver(LL3Daemon.getInstance());
         addObserver(ARPDaemon.getInstance());
         addObserver(LRPDaemon.getInstance());
         addObserver(Scheduler.getInstance());
@@ -258,5 +260,9 @@ public class Bootloader extends Observable {
         forwardingTable.clear();
         forwardingTable.addRoutes(bestRoutes);
         */
+
+        // Lab 11: Testing LL3P
+        //LL1Daemon.getInstance().addAdjacency("10.30.85.32", "111111");
+        //LL1Daemon.getInstance().addAdjacency("10.30.85.32", "222222");
     }
 }

@@ -79,7 +79,8 @@ public class ARPDaemon extends Observable implements Observer, Runnable{
             ARPRecord arpRecord = (ARPRecord)this.arpTable.getItem(ll3pAddress);
             this.arpTable.touch(ll3pAddress);
         } catch(LabException e) {
-            Log.i(Constants.LOG_TAG, e.getMessage());
+            Log.i(Constants.LOG_TAG, "Could not find ARPRecord with ll3pAddress: " + ll3pAddress);
+            e.printStackTrace();
         }
     }
 
@@ -114,7 +115,8 @@ public class ARPDaemon extends Observable implements Observer, Runnable{
             ARPRecord arpRecord = (ARPRecord)this.arpTable.getItem(ll3pAddress);
             return arpRecord.getLL2PAddress();
         } catch(LabException e) {
-            Log.i(Constants.LOG_TAG, e.getMessage());
+            Log.i(Constants.LOG_TAG, "Could not find ARPRecord with ll3pAddress: " + ll3pAddress);
+            e.printStackTrace();
             throw(e);
         }
     }

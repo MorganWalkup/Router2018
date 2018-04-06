@@ -1,30 +1,33 @@
 package com.morganwalkup.networks.datagramFields;
 
+import com.morganwalkup.networks.Constants;
 import com.morganwalkup.support.Utilities;
 
 /**
- * Class representing the CRC field inside LL2P packets and frames
- * Created by morganwalkup on 1/24/18.
+ * Created by morganwalkup on 4/4/18.
+ * 1 byte field with max value of 15
  */
+public class LL3PTTLField implements HeaderField {
 
-public class CRC implements HeaderField {
-
-    /** Fake string value of the address */
-    private String crcValue;
+    /** Time to live - number of hops before this packet is discarded */
+    private Integer ttl;
+    public Integer getTTL() { return this.ttl; }
 
     /**
-     * Constructor taking a string of the type value
+     * Constructor accepting string
+     * @param inputData - String holding construction data
      */
-    public CRC(String typeValueString) {
-        this.crcValue = typeValueString.substring(0, 4);
+    public LL3PTTLField(String inputData) {
+        ttl = Integer.parseInt(inputData, Constants.HEX_BASE);
     }
 
-    /***
+
+    /**
      * Returns a string representation of the header field
      * @return String representation of the header field
      */
     public String toString() {
-        return crcValue.toString();
+        return toTransmissionString();
     }
 
     /**
@@ -32,7 +35,7 @@ public class CRC implements HeaderField {
      * @return The string to be embedded
      */
     public String toTransmissionString() {
-        return this.toHexString();
+        return toHexString();
     }
 
     /**
@@ -40,7 +43,7 @@ public class CRC implements HeaderField {
      * @return Hex representation
      */
     public String toHexString() {
-        return this.crcValue;
+        return Utilities.padHexString(Integer.toHexString(ttl), Constants.LL3P_TTL_FIELD_LENGTH);
     }
 
     /**
@@ -48,14 +51,22 @@ public class CRC implements HeaderField {
      * @return ASCII string
      */
     public String toASCIIString() {
-        return Utilities.convertHexToASCII(this.toHexString());
+        return ttl.toString();
     }
 
     /**
      * Returns formatted string displaying the content and meaning of the field
-     * @return The explanation string
+     * @return The formatted string
      */
     public String explainSelf() {
-        return "CRC: " + this.crcValue;
+        return "TTL: " + this.ttl.toString();
     }
+
+    /**
+     * Decrement the TTL field by 1
+     */
+    public void decrementTTL() {
+        ttl = ttl - 1;
+    }
+
 }

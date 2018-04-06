@@ -164,7 +164,8 @@ public class LL2PFrame implements Datagram {
         String summaryString = "";
         summaryString += (" | " + this.destinationAddress.toHexString());
         summaryString += (" | " + this.sourceAddress.toHexString());
-        summaryString += (" | " + this.getType().toHexString());
+        summaryString += (" | " + this.type.toHexString());
+        summaryString += (" | " + this.payload.toSummaryString());
         return summaryString;
     }
 

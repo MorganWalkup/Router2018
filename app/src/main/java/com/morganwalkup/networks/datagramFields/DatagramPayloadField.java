@@ -14,6 +14,8 @@ public class DatagramPayloadField implements HeaderField {
 
     /** Generic datagram */
     private Datagram packet;
+    /** String holding payload summary */
+    private String summary;
 
     /**
      * Constructor accepting a datagram packet
@@ -33,21 +35,34 @@ public class DatagramPayloadField implements HeaderField {
         switch(payloadType) {
             case Constants.LL2P_TYPE_IS_TEXT:
                 this.packet = DatagramFactory.getInstance().getItem(Constants.TEXT_DATAGRAM, payloadContent);
+                this.summary = payloadContent;
                 break;
             case Constants.LL2P_TYPE_IS_ECHO_REQUEST:
                 this.packet = DatagramFactory.getInstance().getItem(Constants.TEXT_DATAGRAM, payloadContent);
+                this.summary = "Echo Request";
                 break;
             case Constants.LL2P_TYPE_IS_ECHO_REPLY:
                 this.packet = DatagramFactory.getInstance().getItem(Constants.TEXT_DATAGRAM, payloadContent);
+                this.summary = "Echo Reply";
                 break;
             case Constants.LL2P_TYPE_IS_ARP_REQUEST:
                 this.packet = DatagramFactory.getInstance().getItem(Constants.ARP_DATAGRAM, payloadContent);
+                this.summary = "ARP Request";
                 break;
             case Constants.LL2P_TYPE_IS_ARP_REPLY:
                 this.packet = DatagramFactory.getInstance().getItem(Constants.ARP_DATAGRAM, payloadContent);
+                this.summary = "ARP Reply";
                 break;
             case Constants.LL2P_TYPE_IS_LRP:
                 this.packet = DatagramFactory.getInstance().getItem(Constants.LRP_PACKET, payloadContent);
+                this.summary = "LRP Update";
+                break;
+            case Constants.LL2P_TYPE_IS_LL3P:
+                this.packet = DatagramFactory.getInstance().getItem(Constants.LL3P_DATAGRAM, payloadContent);
+                String ll3pPayloadContent = payloadContent.substring(
+                        Constants.LL3P_PAYLOAD_FIELD_BEGIN_INDEX*2,
+                        payloadContent.length() - Constants.LL3P_CHECKSUM_FIELD_LENGTH*2);
+                this.summary = "LL3: " + ll3pPayloadContent;
                 break;
             default:
                 break;
@@ -102,5 +117,9 @@ public class DatagramPayloadField implements HeaderField {
         return packet.toProtocolExplanationString();
     }
 
-
+    /**
+     * Returns summary of payload content
+     * @return Summary string of payload
+     */
+    public String toSummaryString() { return this.summary; }
 }

@@ -1,30 +1,33 @@
 package com.morganwalkup.networks.datagramFields;
 
+import com.morganwalkup.networks.Constants;
 import com.morganwalkup.support.Utilities;
 
 /**
- * Class representing the CRC field inside LL2P packets and frames
- * Created by morganwalkup on 1/24/18.
+ * Created by morganwalkup on 4/4/18.
+ * Very end of LL3 packet. Used for error checking
  */
 
-public class CRC implements HeaderField {
+public class LL3PChecksum implements HeaderField {
 
-    /** Fake string value of the address */
-    private String crcValue;
+    /** Integer representation of the checksum */
+    private Integer checksum;
+    public Integer getChecksum() { return checksum; }
 
     /**
-     * Constructor taking a string of the type value
+     * Constructor accepting a string
+     * @param dataString - String holding construction data
      */
-    public CRC(String typeValueString) {
-        this.crcValue = typeValueString.substring(0, 4);
+    public LL3PChecksum(String dataString) {
+        checksum = Integer.parseInt(dataString, Constants.HEX_BASE);
     }
 
-    /***
+    /**
      * Returns a string representation of the header field
      * @return String representation of the header field
      */
     public String toString() {
-        return crcValue.toString();
+        return checksum.toString();
     }
 
     /**
@@ -32,7 +35,7 @@ public class CRC implements HeaderField {
      * @return The string to be embedded
      */
     public String toTransmissionString() {
-        return this.toHexString();
+        return Utilities.padHexString(toHexString(), Constants.LL3P_CHECKSUM_FIELD_LENGTH);
     }
 
     /**
@@ -40,7 +43,7 @@ public class CRC implements HeaderField {
      * @return Hex representation
      */
     public String toHexString() {
-        return this.crcValue;
+        return Integer.toHexString(checksum);
     }
 
     /**
@@ -48,14 +51,14 @@ public class CRC implements HeaderField {
      * @return ASCII string
      */
     public String toASCIIString() {
-        return Utilities.convertHexToASCII(this.toHexString());
+        return checksum.toString();
     }
 
     /**
      * Returns formatted string displaying the content and meaning of the field
-     * @return The explanation string
+     * @return The formatted string
      */
     public String explainSelf() {
-        return "CRC: " + this.crcValue;
+        return "Checksum: " + toString();
     }
 }

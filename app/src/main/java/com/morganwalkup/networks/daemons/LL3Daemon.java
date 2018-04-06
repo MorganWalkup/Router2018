@@ -73,9 +73,9 @@ public class LL3Daemon implements Observer {
      */
     public void sendLL3PToNextHop(LL3PDatagram ll3Datagram) {
         // 1. Get ll3DestinationAddress
-        Integer ll3DestinationAddress = ll3Datagram.getDestinationAddress().getAddress();
+        Integer ll3DestinationNetwork = ll3Datagram.getDestinationAddress().getNetworkNumber();
         // 2. Get next hop from LRPDaemon forwarding table
-        Integer ll3NextHop = lrpDaemon.getForwardingTable().getNextHop(ll3DestinationAddress);
+        Integer ll3NextHop = lrpDaemon.getForwardingTable().getNextHop(ll3DestinationNetwork);
         // 3. Get next hop's LL2 address from ARPDaemon
         try {
             Integer ll2NextHop = arpDaemon.getMACAddress(ll3NextHop);
@@ -93,7 +93,7 @@ public class LL3Daemon implements Observer {
      */
     public void processLL3PPacket(LL3PDatagram packet, Integer layer2Address) {
         // Touch arp record for layer2Address
-        arpDaemon.getARPTable().touch(layer2Address);
+        arpDaemon.getARPTable().touch(packet.getSourceAddress().getAddress());
         // If payload is addressed to this router, display text on screen
         if(packet.getDestinationAddress().getAddress() == Constants.MY_LL3P_SOURCE_ADDRESS_INT) {
             UIManager.getInstance().displayMessage(packet.getDatagramPayload().toString());

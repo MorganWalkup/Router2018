@@ -33,10 +33,10 @@ public class LL3PAddressField implements HeaderField {
     public LL3PAddressField(String dataString, Boolean isSourceAddress) {
         this.address = Integer.parseInt(dataString, Constants.HEX_BASE);
 
-        String networkString = dataString.substring(0,Constants.LL3P_SRC_ADDR_FIELD_LENGTH * 2);
+        String networkString = dataString.substring(0,Constants.LL3P_NETWORK_ADDR_FIELD_LENGTH * 2);
         this.networkNumber = Integer.parseInt(networkString, Constants.HEX_BASE);
 
-        String hostString = dataString.substring(Constants.LL3P_SRC_ADDR_FIELD_LENGTH * 2);
+        String hostString = dataString.substring(Constants.LL3P_NETWORK_ADDR_FIELD_LENGTH * 2);
         this.hostNumber = Integer.parseInt(hostString, Constants.HEX_BASE);
 
         this.isSourceAddress = isSourceAddress;

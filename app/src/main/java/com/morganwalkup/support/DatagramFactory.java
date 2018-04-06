@@ -4,6 +4,7 @@ import com.morganwalkup.networks.Constants;
 import com.morganwalkup.networks.datagram.ARPDatagram;
 import com.morganwalkup.networks.datagram.Datagram;
 import com.morganwalkup.networks.datagram.LL2PFrame;
+import com.morganwalkup.networks.datagram.LL3PDatagram;
 import com.morganwalkup.networks.datagram.LRPPacket;
 import com.morganwalkup.networks.datagram.TextDatagram;
 
@@ -43,6 +44,8 @@ public class DatagramFactory implements Factory<Datagram, String> {
                 return (U) new ARPDatagram(inputData);
             case Constants.LRP_PACKET:
                 return (U) new LRPPacket(inputData);
+            case Constants.LL3P_DATAGRAM:
+                return (U) new LL3PDatagram(inputData);
             default:
                 return null;
         }

@@ -44,6 +44,9 @@ public class Constants {
     public static final String TEST_DESTINATION_ADDRESS = "C0FFEE";
     public static final String TEST_PAYLOAD = "Hello, world!";
     public static final String TEST_CRC_CODE = "7777";
+    public static final String TEST_LL3P_IDENTIFIER = "0000";
+    public static final String TEST_LL3P_TTL = "0F";
+    public static final String TEST_LL3P_CHECKSUM = "AAAA";
 
     // Unique integer constant for Text Datagrams
     public static final int TEXT_DATAGRAM = 8;
@@ -77,6 +80,18 @@ public class Constants {
     public static final int LRP_PACKET = 22;
     // Unique integer constant for Routing Records
     public static final int ROUTING_RECORD = 23;
+    // Unique integer constant for LL3P datagrams
+    public static final int LL3P_DATAGRAM = 24;
+    // Unique integer constant for LL3P Type field
+    public static final int LL3P_TYPE = 25;
+    // Unique integer constant for LL3P Identifier field
+    public static final int LL3P_IDENTIFIER = 26;
+    // Unique integer constant for LL3P TTL field
+    public static final int LL3P_TTL = 27;
+    // Unique integer constant for LL3P Payload field
+    public static final int LL3P_PAYLOAD_FIELD = 28;
+    // Unique integer constant for LL3P Checksum field
+    public static final int LL3P_CHECKSUM = 29;
 
     // The length of the LL2P frame address field in bytes
     public static final int LL2P_ADDR_FIELD_LENGTH = 3;
@@ -92,12 +107,6 @@ public class Constants {
     public static final int LL2P_PAYLOAD_FIELD_OFFSET = 8;
     // The length of the LL2P frame CRC field in bytes
     public static final int LL2P_CRC_FIELD_LENGTH = 2;
-    // The length of the LL3P address field in bytes
-    public static final int LL3P_ADDR_FIELD_LENGTH = 2;
-    // The length of the LL3P source address field in bytes
-    public static final int LL3P_SRC_ADDR_FIELD_LENGTH = 1;
-    // The length of the LL3P destination address field in bytes
-    public static final int LL3P_DEST_ADDR_FIELD_LENGTH = 1;
     // The length of the LRP sequence number in nibbles (4 bits)
     public static final int LRP_SEQ_NUM_NIBBLES = 1;
     // The length of the LRP sequence number in nibbles (4 bits)
@@ -108,6 +117,24 @@ public class Constants {
     public static final int LRP_DISTANCE_FIELD_LENGTH = 1;
     // The length of the LRP network distance pair field in bytes
     public static final int LRP_NET_DIST_PAIR_LENGTH = 2;
+    // The length of the LL3P address field in bytes
+    public static final int LL3P_ADDR_FIELD_LENGTH = 2;
+    // The length of the LL3P network address field (within the full address) in bytes
+    public static final int LL3P_NETWORK_ADDR_FIELD_LENGTH = 1;
+    // The length of the LL3P source address field in bytes
+    public static final int LL3P_SRC_ADDR_FIELD_LENGTH = 2;
+    // The length of the LL3P destination address field in bytes
+    public static final int LL3P_DEST_ADDR_FIELD_LENGTH = 2;
+    // The length of the LL3P type field in bytes
+    public static final int LL3P_TYPE_FIELD_LENGTH = 2;
+    // The length of the LL3P identifier field in bytes
+    public static final int LL3P_IDENTIFIER_FIELD_LENGTH = 2;
+    // The length of the LL3P ttl field in bytes
+    public static final int LL3P_TTL_FIELD_LENGTH = 1;
+    // The length of the LL3P checksum field in bytes
+    public static final int LL3P_CHECKSUM_FIELD_LENGTH = 2;
+    // The beginning index of the LL3P payload field in bytes
+    public static final int LL3P_PAYLOAD_FIELD_BEGIN_INDEX = 9;
 
     // LL2P Payload types
     public static final String LL2P_TYPE_IS_LL3P = "8001";
@@ -131,11 +158,11 @@ public class Constants {
     // Time between UI updates in seconds
     public static final int UI_UPDATE_INTERVAL = 1;
     // Time between LRP updates in seconds
-    public static final int LRP_UPDATE_INTERVAL = 1;
+    public static final int LRP_UPDATE_INTERVAL = 10;
     // Max age for ARP records in seconds
-    public static final int ARP_RECORD_MAX_AGE = 10;
+    public static final int ARP_RECORD_MAX_AGE = 60;
     // Max age for routing records in seconds
-    public static final int ROUTING_RECORD_MAX_AGE = 10;
+    public static final int ROUTING_RECORD_MAX_AGE = 60;
 
     static {
         IP_ADDRESS = getLocalIpAddress();
