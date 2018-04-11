@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.morganwalkup.UI.AddAdjacencyDialog;
+import com.morganwalkup.UI.Messenger;
 import com.morganwalkup.UI.UIManager;
 import com.morganwalkup.networks.Constants;
 import com.morganwalkup.networks.daemons.LL1Daemon;
@@ -57,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements AddAdjacencyDialo
         else if (item.getItemId() == R.id.addAdjacency){
             AddAdjacencyDialog dialog = new AddAdjacencyDialog();
             dialog.show(getFragmentManager(), "adjacency_dialog");
+        }
+        else if (item.getItemId() == R.id.openMessenger){
+            UIManager.getInstance().openMessengerWindow();
         }
         return super.onOptionsItemSelected(item);
     }

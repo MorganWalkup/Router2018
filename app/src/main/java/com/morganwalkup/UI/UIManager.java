@@ -30,6 +30,9 @@ public class UIManager implements Observer {
     // Manager for sniffer ui
     private SnifferUI snifferUI;
     public SnifferUI getSnifferUI() { return this.snifferUI; }
+    // Manager for messenger window
+    private Messenger messenger;
+    public Messenger getMessenger() { return this.messenger; }
 
     /**
      * Constructor for the UIManager class
@@ -37,6 +40,7 @@ public class UIManager implements Observer {
     private UIManager() {
         tableUI = new TableUI();
         snifferUI = new SnifferUI();
+        messenger = new Messenger();
     }
 
     /**
@@ -82,8 +86,16 @@ public class UIManager implements Observer {
         if(observable instanceof Bootloader) {
             parentActivity = ParentActivity.getParentActivity();
             context = parentActivity.getBaseContext();
+            messenger.finishCreatingMessenger();
             setUpWidgets();
         }
+    }
+
+    /**
+     * Opens the messenger window
+     */
+    public void openMessengerWindow() {
+        messenger.openMessengerWindow();
     }
 
 }

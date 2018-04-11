@@ -10,4 +10,10 @@
         android:orderInCategory="110"
         android:title="@string/add_adjacency_menu_item">
     </item>
+    <item
+        android:id="@+id/openMessenger"
+        android:orderInCategory="110"
+        android:title="Open Messenger"
+        >
+    </item>
 </menu>

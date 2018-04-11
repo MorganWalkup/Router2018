@@ -1,11 +1,13 @@
 package com.morganwalkup.networks.daemons;
 
+import com.morganwalkup.UI.Messenger;
 import com.morganwalkup.UI.UIManager;
 import com.morganwalkup.networks.Constants;
 import com.morganwalkup.networks.datagram.LL3PDatagram;
 import com.morganwalkup.support.Bootloader;
 import com.morganwalkup.support.DatagramFactory;
 import com.morganwalkup.support.LabException;
+import com.morganwalkup.support.Utilities;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -27,6 +29,8 @@ public class LL3Daemon implements Observer {
     private LL2Daemon ll2Daemon;
     /** Reference to the LRPDaemon instance to get next hop information when forwarding LL3 packets*/
     private LRPDaemon lrpDaemon;
+    /** Reference to the Messenger window */
+    private Messenger messenger;
 
     /** Empty constructor */
     private LL3Daemon() {}
@@ -43,6 +47,7 @@ public class LL3Daemon implements Observer {
             arpDaemon = ARPDaemon.getInstance();
             ll2Daemon = LL2Daemon.getInstance();
             lrpDaemon = LRPDaemon.getInstance();
+            messenger = UIManager.getInstance().getMessenger();
         }
     }
 
@@ -54,7 +59,9 @@ public class LL3Daemon implements Observer {
      */
     public void sendPayload(String message, Integer ll3DestinationAddress) {
         // Create LL3P Datagram
-        String ll3pDestinationString = Integer.toString(ll3DestinationAddress, Constants.HEX_BASE);
+        String ll3pDestinationString = Utilities.padHexString(
+                Integer.toString(ll3DestinationAddress, Constants.HEX_BASE),
+                Constants.LL3P_ADDR_FIELD_LENGTH);
         String ll3pDataString = Constants.MY_LL3P_SOURCE_ADDRESS +
                 ll3pDestinationString +
                 Constants.LL2P_TYPE_IS_TEXT +
@@ -92,11 +99,14 @@ public class LL3Daemon implements Observer {
      * @param layer2Address
      */
     public void processLL3PPacket(LL3PDatagram packet, Integer layer2Address) {
+        Integer ll3SourceAddress = packet.getSourceAddress().getAddress();
         // Touch arp record for layer2Address
-        arpDaemon.getARPTable().touch(packet.getSourceAddress().getAddress());
+        arpDaemon.getARPTable().touch(ll3SourceAddress);
         // If payload is addressed to this router, display text on screen
         if(packet.getDestinationAddress().getAddress() == Constants.MY_LL3P_SOURCE_ADDRESS_INT) {
-            UIManager.getInstance().displayMessage(packet.getDatagramPayload().toString());
+            String message = packet.getDatagramPayload().toString();
+            UIManager.getInstance().displayMessage(message);
+            messenger.receiveMessage(ll3SourceAddress, message);
         }
         // If packet is for a different node, decrement TTL and send to next hop
         else {

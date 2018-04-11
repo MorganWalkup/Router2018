@@ -19,4 +19,7 @@
     <string name="adjacency_dialog_ip_hint">10.0.1.1</string>
     <string name="adjacency_dialog_confirm">Add Adjacency</string>
     <string name="adjacency_dialog_cancel">Cancel</string>
+
+    <string name="name_prompt">Send to?</string>
+
 </resources>
