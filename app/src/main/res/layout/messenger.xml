@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/messengerLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <!--<TextView
+        android:id="@+id/messengerTitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Lab Messenger"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/black" />-->
+
+    <Spinner
+        android:id="@+id/nameSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="17dip"
+        android:prompt="@string/name_prompt" />
+
+    <ListView
+        android:id="@+id/recievedMessagesListView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_weight="0.91"
+        android:divider="@color/white"
+        android:dividerHeight="2dip"
+        android:textColor="@color/black"></ListView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/messengerExitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exit" />
+
+        <!-- Dummy item to prevent messengerEditText from receiving focus automatically -->
+        <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="0px"
+            android:layout_height="0px"/>
+
+        <!-- :nextFocusUp and :nextFocusLeft have been set to the id of this component
+        to prevent the dummy from receiving focus again -->
+        <EditText
+            android:id="@+id/messengerEditText"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.06"
+            android:scrollHorizontally="false"
+            android:inputType="textMultiLine"
+            android:maxLines ="1"
+            android:maxLength ="2000"
+            android:imeOptions="flagNoExtractUi"
+            android:nextFocusUp="@id/messengerEditText"
+            android:nextFocusLeft="@id/messengerEditText"
+            android:hint="Enter message for friend">
+
+            <!--<requestFocus />-->
+
+        </EditText>
+
+        <Button
+            android:id="@+id/messengerSendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send" />
+
+    </LinearLayout>
+
+</LinearLayout>
